@@ -1,0 +1,491 @@
+    @font-face {
+      font-family: 'Determination';
+      src: url('../assets/fonts/determination.ttf') format('truetype');
+      font-display: swap;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --accent-red: #ff0000;
+      --accent-yellow: #ffff00;
+      --accent-gray: #777777;
+      --nav-bg: #2a2a2a;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Determination', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background-color: var(--nav-bg);
+      padding: 14px 0;
+      display: flex;
+      justify-content: center;
+      gap: clamp(10px, 3vw, 48px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent-yellow);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px 40px;
+      text-align: center;
+    }
+
+    .hero-logo {
+      width: clamp(280px, 25vw, 600px);
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    .hero-title {
+      font-size: clamp(52px, 10vw, 100px);
+      letter-spacing: 6px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .discord-box {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .discord-subtitle {
+      font-size: 16px;
+      color: var(--accent-gray);
+      letter-spacing: 1px;
+    }
+
+    .discord-cta {
+      padding: 15px 35px;
+      border: 2px solid var(--accent-yellow);
+      background: transparent;
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 22px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .discord-cta:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    .patcher-box {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .patcher-subtitle {
+      font-size: 16px;
+      color: var(--accent-gray);
+      letter-spacing: 1px;
+    }
+
+    .patcher-cta {
+      padding: 15px 35px;
+      border: 2px solid var(--accent-yellow);
+      background: transparent;
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 22px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .patcher-cta:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+
+    .games-section {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .games-section h2 {
+      font-size: clamp(26px, 4vw, 38px);
+      letter-spacing: 3px;
+      margin-bottom: 36px;
+    }
+
+    .game-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .game-card {
+      border: 2px solid var(--accent-gray);
+      border-radius: 4px;
+      padding: 20px;
+      width: 280px;
+      background: #111;
+      transition: border-color 0.25s, transform 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .game-card:hover {
+      border-color: var(--accent-yellow);
+      transform: translateY(-4px);
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 2px;
+      margin-bottom: 16px;
+      border: 1px solid #333;
+    }
+
+    .game-card .card-title {
+      font-size: 24px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .game-card .card-status {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--accent-yellow);
+      margin-bottom: 4px;
+    }
+
+    .game-card .card-engine {
+      font-size: 13px;
+      color: var(--accent-gray);
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+
+    .disclaimer-section {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #222;
+      background-color: #0a0a0a;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .raid-notice {
+      max-width: 800px;
+      margin: 40px auto 60px;
+      padding: 24px;
+      border: 2px solid var(--accent-red);
+      background-color: #0a0a0a;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .raid-notice-title {
+      color: var(--accent-red);
+      font-size: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .raid-notice-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    .raid-notice-text span {
+      color: var(--accent-yellow);
+    }
+
+    .disclaimer-title {
+      color: var(--accent-red);
+      font-size: 17px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .disclaimer-text {
+      font-size: 13px;
+      color: var(--accent-gray);
+      line-height: 1.8;
+      letter-spacing: 1px;
+    }
+
+    .about-section {
+      text-align: center;
+      padding: 70px 20px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .about-section h2 {
+      font-size: clamp(24px, 3.5vw, 34px);
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+
+    .about-section p {
+      font-size: 15px;
+      color: var(--accent-gray);
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    .about-section p span {
+      color: var(--text);
+    }
+
+    footer {
+      border-top: 1px solid #222;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: #555;
+      letter-spacing: 2px;
+      line-height: 2;
+    }
+
+    footer a {
+      color: var(--accent-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--accent-yellow);
+    }
+
+    /* Hero section */
+    .hero-logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .playtest-cta.disabled {
+      background-color: #555;
+      cursor: default;
+      color: #ccc;
+    }
+
+    /* Intro section */
+    .intro-section {
+      text-align: center;
+      padding: 20px 20px 50px;
+      max-width: 40vw;
+      margin: 0 auto;
+    }
+
+    .intro-text {
+      font-size: 16px;
+      color: var(--accent-gray);
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    .highlight-yellow {
+      color: var(--accent-yellow);
+    }
+
+    /* Section titles */
+    .section-title {
+      font-size: clamp(24px, 3.5vw, 34px);
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+
+    .section-title-alt {
+      font-size: clamp(24px, 3.5vw, 34px);
+      letter-spacing: 3px;
+      margin-bottom: 36px;
+    }
+
+    /* Text sections (Patcher, How it's Made, FAQ) */
+    .text-section {
+      text-align: center;
+      padding: 70px 20px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .text-section p {
+      font-size: 16px;
+      color: var(--accent-gray);
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    /* FAQ section */
+    .faq-content {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .faq-question {
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    .faq-answer {
+      font-size: 14px;
+      color: var(--accent-gray);
+      line-height: 1.9;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 12px 10px;
+        position: relative;
+      }
+      nav a {
+        font-size: 11px;
+        letter-spacing: 1px;
+        padding: 4px 8px;
+      }
+      .hero {
+        padding: 40px 15px 30px;
+      }
+      .hero-logo {
+        width: min(85vw, 350px);
+      }
+      .intro-section {
+        max-width: 90vw;
+        padding: 15px 15px 40px;
+      }
+      .intro-text {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .game-card {
+        width: 100%;
+        max-width: 340px;
+      }
+      .game-card img {
+        height: 140px;
+      }
+      .game-card .card-title {
+        font-size: 20px;
+      }
+      .games-section {
+        padding: 40px 15px;
+      }
+      .disclaimer-section {
+        margin: 30px 15px;
+        padding: 15px;
+      }
+      .disclaimer-text {
+        font-size: 12px;
+      }
+      .text-section {
+        padding: 50px 15px;
+        max-width: 95vw;
+      }
+      .text-section p {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .faq-question {
+        font-size: 16px;
+      }
+      .faq-answer {
+        font-size: 13px;
+      }
+      .faq-content {
+        gap: 20px;
+      }
+      .discord-cta, .patcher-cta {
+        font-size: 18px;
+        padding: 12px 28px;
+      }
+      .hero-title { font-size: 32px; }
+      .playtest-cta { font-size: 14px; padding: 10px 20px; }
+      footer {
+        padding: 30px 15px;
+      }
+      footer p {
+        font-size: 11px;
+        line-height: 1.8;
+      }
+    }
+
+    @media (max-width: 400px) {
+      nav a {
+        font-size: 10px;
+        padding: 3px 6px;
+      }
+      .hero-logo {
+        width: 90vw;
+      }
+      .game-card {
+        padding: 15px;
+      }
+      .section-title, .section-title-alt {
+        font-size: 22px;
+      }
+    }
