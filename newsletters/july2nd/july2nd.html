@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>July 2nd Newsletter | Project Sunshine</title>
+  <link rel="icon" type="image/png" href="../../assets/logo/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    body {
+      font-family: 'Determination', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .newsletter-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 20px 80px;
+    }
+
+.newsletter-banner {
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin: 0 auto 20px;
+      image-rendering: pixelated;
+    }
+
+    .newsletter-subtitle {
+      text-align: center;
+      color: var(--accent-gray);
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    .nl-greet {
+      font-size: clamp(24px, 4vw, 40px);
+      text-align: center;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .nl-section-title {
+      color: var(--accent-yellow);
+      font-size: clamp(20px, 3.2vw, 28px);
+      letter-spacing: 3px;
+      margin: 60px 0 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .nl-body {
+      color: var(--accent-gray);
+      font-size: 16px;
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    .nl-body p {
+      margin-bottom: 16px;
+    }
+
+    .nl-body h3 {
+      color: var(--text);
+      font-size: 18px;
+      letter-spacing: 1.5px;
+      margin: 28px 0 10px;
+    }
+
+    .nl-media {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .nl-media video,
+    .nl-media img {
+      width: 100%;
+      max-width: 640px;
+      border: 2px solid var(--accent-gray);
+      border-radius: 4px;
+      background: #000;
+    }
+
+    .nl-media .media-pair {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .nl-media .media-pair video,
+    .nl-media .media-pair img {
+      max-width: 420px;
+    }
+
+    .nl-caption {
+      color: var(--accent-gray);
+      font-size: 13px;
+      letter-spacing: 1px;
+      font-style: italic;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .back-link a {
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 2px solid var(--accent-yellow);
+      padding: 12px 28px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .back-link a:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    @media (max-width: 768px) {
+      .nl-body {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .newsletter-wrap {
+        padding: 40px 15px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../../index.html">Home</a>
+    <a href="#newsletter">Newsletter</a>
+  </nav>
+
+  <main class="newsletter-wrap" id="newsletter">
+    <img src="assets/newsletter.png" alt="July 2nd Newsletter" class="newsletter-banner">
+    <p class="newsletter-subtitle">July 2nd Newsletter</p>
+
+    <div class="newsletter-content">
+
+      <h2 class="nl-greet">Grrrreatings!</h2>
+
+      <div class="nl-body">
+        <p>Welcome to the first newsletter... hosted on our site.</p>
+        <p>There's not much to put on here.. maybe you could call this a "Oldsletter?"</p>
+        <p>All jokes aside, I would like to show a bit of progress on <span style="color: var(--accent-yellow);">UNDERTALE 3DS</span>.</p>
+        <p>A bit of old news before we get to the new(ish) news..</p>
+      </div>
+
+      <h2 class="nl-section">UNDERTALE 3DS</h2>
+
+      <div class="nl-body">
+        <p>As mentioned before, you will not need to have a PC or the patience to go through more than 2 hours to preprocess assets. What is preprocessing? It's just converting your game into something the 3DS can read. There will be a patcher hosted on the website as well as a Windows EXE for preprocessing, or you can wait a <em>LONG</em> time to preprocess on 3DS. Here's what it will look like on web:</p>
+
+        <div class="nl-media">
+          <video controls src="assets/preprocessing.mp4"></video>
+          <span class="nl-caption">Preprocessing on the web</span>
+        </div>
+
+        <p>Pretty easy, eh?</p>
+
+        <p>We posted a video of Omega Flowey running on 3DS. You can watch it below:</p>
+
+        <div class="nl-media">
+          <video controls src="assets/flowey.mp4"></video>
+          <span class="nl-caption">Omega Flowey running on 3DS</span>
+        </div>
+
+        <p>A lot of videos lately have been showing one screen only, and no, this does not mean that the game will be top screen only. The reason most of it is on top screen is for testing. It makes it a bit easier for us. (Though, you can turn off the bottom screen in the MENU..)</p>
+
+        <p>We had uploaded a few videos of touch, feel free to watch them:</p>
+
+        <div class="nl-media">
+          <div class="media-pair">
+            <video controls src="assets/asgoretouch.mp4"></video>
+            <video controls src="assets/muffettouch.mp4"></video>
+          </div>
+        </div>
+
+        <h3>Some more footage..</h3>
+
+        <p>The Muffet fight. This fight uses Surfaces, which already are VERY useful for DELTARUNE.</p>
+        <div class="nl-media">
+          <video controls src="assets/muffet.mov"></video>
+        </div>
+
+        <p>The Asriel fight with the rainbow LED:</p>
+        <div class="nl-media">
+          <video controls src="assets/asriel.mov"></video>
+        </div>
+
+        <p>Little sneak peek of UNDERTALE 3DS on an airplane.. (thanks ralcactus)</p>
+        <div class="nl-media">
+          <img src="assets/airplane.jpg" alt="UNDERTALE 3DS on an airplane">
+        </div>
+
+        <p>Here's what the bottom screen looks like..</p>
+        <div class="nl-media">
+          <div class="media-pair">
+            <img src="assets/bottomscreen.png" alt="Bottom screen">
+            <img src="assets/text.png" alt="Text">
+          </div>
+        </div>
+
+        <p>..and here's our banner for the game! (thanks jonspeedarts!)</p>
+        <div class="nl-media">
+          <img src="assets/banner.jpg" alt="Game banner">
+        </div>
+
+        <h3>Now, here's the new stuff..</h3>
+
+        <p>The Undyne fight with touch! This took a bit to perfect, but it works great! Maybe soon I'll even beat Undyne the Undying with it..</p>
+        <div class="nl-media">
+          <video controls src="assets/undyne.mp4"></video>
+        </div>
+
+        <p>Uhhhhh.. blue soul. I still need to work the blue soul out a bit, it's a bit scuffed.</p>
+      </div>
+
+      <h2 class="nl-section">DELTARUNE 3DS</h2>
+
+      <div class="nl-body">
+        <p>Not much to show, but I would like to show one thing..</p>
+
+        <p>Chapter Select! It seems boring, but it works!</p>
+        <div class="nl-media">
+          <video controls src="assets/gamechange.mov"></video>
+        </div>
+
+        <p>Here's a recap of what works so far, too.</p>
+
+        <h3>Chapter 1:</h3>
+        <div class="nl-media">
+          <div class="media-pair">
+            <img src="assets/IMAGE_DEPTHS.png" alt="Chapter 1 - image depths">
+            <img src="assets/home.png" alt="Chapter 1 - home">
+          </div>
+        </div>
+
+        <h3>Chapter 2:</h3>
+        <div class="nl-media">
+          <div class="media-pair">
+            <img src="assets/menu.png" alt="Chapter 2 - menu">
+            <img src="assets/school.png" alt="Chapter 2 - school">
+          </div>
+        </div>
+
+        <h3>Chapter 3:</h3>
+        <div class="nl-media">
+          <img src="assets/ohmygodtheyKILLEDtenna.png" alt="Chapter 3 - Tenna">
+        </div>
+
+        <p>Chapter 4 and 5 may be shown soon..</p>
+      </div>
+
+      <h2 class="nl-section">Q&A</h2>
+      <div class="nl-body">
+        <p>I assume most people are in the server, so for those who are, there is a new Q&amp;A channel! Ask questions you have there and they will be answered in the next newsletter!</p>
+      </div>
+
+      <h2 class="nl-section">Goodbye</h2>
+      <div class="nl-body" style="text-align: center;">
+        <p>Thanks for reading the first newsletter on the website!</p>
+        <p>See everyone next week!</p>
+      </div>
+
+      <div class="back-link">
+        <a href="../../index.html">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      <a href="https://www.youtube.com/@theprojectsunshine/" target="_blank">YouTube</a> &nbsp;|&nbsp;
+      <a href="https://discord.gg/undertale3ds" target="_blank">Discord</a>
+    </p>
+    <br>
+    <p>Not affiliated with Toby Fox, Materia Collective, or MasterSwordRemix. All trademarks belong to their respective owners.</p>
+  </footer>
+
+</body>
+</html>
