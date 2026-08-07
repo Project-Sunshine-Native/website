@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>August 7th Newsletter | Project Sunshine</title>
+  <link rel="icon" type="image/png" href="../../assets/logo/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    body {
+      font-family: 'Determination', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .newsletter-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 20px 80px;
+    }
+
+    .newsletter-banner {
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin: 0 auto 20px;
+      image-rendering: pixelated;
+    }
+
+    .newsletter-subtitle {
+      text-align: center;
+      color: var(--accent-gray);
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    .nl-greet {
+      font-size: clamp(24px, 4vw, 40px);
+      text-align: center;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .nl-section {
+      color: var(--accent-yellow);
+      font-size: clamp(20px, 3.2vw, 28px);
+      letter-spacing: 3px;
+      margin: 60px 0 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .nl-body {
+      color: var(--accent-gray);
+      font-size: 16px;
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    .nl-body p {
+      margin-bottom: 16px;
+    }
+
+    .qa-block {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      text-align: left;
+    }
+
+    .qa-item {}
+
+    .qa-question {
+      color: var(--text);
+      font-size: 17px;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+
+    .qa-answer {
+      color: var(--accent-gray);
+      font-size: 15px;
+      line-height: 1.9;
+      letter-spacing: 1px;
+    }
+
+    .newsletter-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 60px;
+    }
+
+    .newsletter-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border: 2px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-arrow:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    .newsletter-arrow.disabled {
+      border-color: var(--accent-gray);
+      color: var(--accent-gray);
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .newsletter-arrow.disabled:hover {
+      background: transparent;
+      color: var(--accent-gray);
+      box-shadow: none;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .back-link a {
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 2px solid var(--accent-yellow);
+      padding: 12px 28px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .back-link a:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    @media (max-width: 768px) {
+      .nl-body {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .qa-answer {
+        font-size: 13px;
+      }
+      .newsletter-wrap {
+        padding: 40px 15px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../../index.html">Home</a>
+    <a href="#newsletter">Newsletter</a>
+  </nav>
+
+  <main class="newsletter-wrap" id="newsletter">
+    <img src="assets/newsletter.png" alt="August 7th Newsletter" class="newsletter-banner">
+    <p class="newsletter-subtitle">August 7th Newsletter</p>
+
+    <div class="newsletter-content">
+
+      <h2 class="nl-greet">Greetings (again)</h2>
+
+      <div class="nl-body">
+        <p>Lots of questions, lots, lots..</p>
+        <p>Thank you to everyone who asked a question on the Q&amp;A! We got lots of questions and will be answering for the Q&amp;A :)</p>
+      </div>
+
+      <h2 class="nl-section">UNDERTALE Yellow 3DS</h2>
+
+      <div class="nl-body">
+        <p>This will be out eventually. Cinnamon has lots of unimplemented functions for UTY as well as some issues with flags, and it's not very possible to get past a few certain points in the Genocide Route. These need fixing before substantial work can get started on the port. This will all be done in due time, not sure when, but in due time. This is also relatively the same for DELTARUNE Chapter 5.</p>
+      </div>
+
+      <h2 class="nl-section">UNDERTALE 3DS</h2>
+
+      <div class="nl-body">
+        <p>Undertale 3DS is done! Right now, we are waiting on GitHub to fix an issue with how a former dev forked the repo we are based off of, so whenever we want to merge changes we have to do it manually, and that's a really big pain in the ass to do. This does not cause a delay, this just means playtesters cannot test until the issue is fixed, nor can I fix bugs that were reported.</p>
+      </div>
+
+      <h2 class="nl-section">Q&A</h2>
+
+      <div class="nl-body qa-body">
+        <div class="qa-item">
+          <p class="qa-question">Approximately when will undertale 3ds release?</p>
+          <p class="qa-answer">This August. If I had to give my BEST guess, likely the 3rd or 4th week of the month?</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">How will the blue soul mode work? Because we know how all the others work (except yellow, but that's prob gonna be like, press A to fire)</p>
+          <p class="qa-answer">Flick to go up. Bit finicky right now, but I'm trying to improve it!</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">Will both Undertale and Deltarune ports work on the old systems?</p>
+          <p class="qa-answer">Yes (including 2DS!)</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">Hey uh, I gotta ask. Are the save files proprietary or can I dump in a PC Deltarune save?</p>
+          <p class="qa-answer">You can use PC saves for both UNDERTALE, DELTARUNE, and UNDERTALE Yellow.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">How is the 3D gonna work?</p>
+          <p class="qa-answer">UNDERTALE doesn't take HEAVY use of it, but it's really just some extra visual effects. DELTARUNE, on the other hand.. you'll see.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">When undertale 3ds will be and will mods like ut red and yellow work?</p>
+          <p class="qa-answer">Sadly, no. Mods will not work. BUT. I will be making mods work with UNDERTALE 3DS. Maybe one day, Red &amp; Yellow will be fully supported. Or 100% Transgender mode.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">Any plans to make a 3DS QR code for download when finished?</p>
+          <p class="qa-answer">No, probably not. Either way, you'll need your game files so you'll have to eject your SD and such to install, so by then it would just be easier to install the CIA directly.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">What happens if it doesn't release in August?</p>
+          <p class="qa-answer">Proceed.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">Wasn't the original plan for undertale wii u to not come out until 3DS was finished? If so, what caused that change of plans? I'm not annoyed about it or anything, genuinely just curious about the development process</p>
+          <p class="qa-answer">We became Wii U focused at one point, and either way we did have multiple people working on both ports at that time, but one took quicker because 3DS had some development hiccups that caused the source code for 3DS to be remade entirely.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">Percentage wise how close is undertale 3DS to being done</p>
+          <p class="qa-answer">98%, the 2% is the bugs that the playtesters may find.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">How much space does the stable version take?</p>
+          <p class="qa-answer">Around 150-200mb.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">Is the Undertale 3DS trailer still being worked on or is the project just getting shadow dropped</p>
+          <p class="qa-answer">Shadow dropped. Makes it more fun :) (the trailer will come out after the release)</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">Will the DELTARUNE chapter 1 be the whole chapter and all fights or just certain rooms like the last one?</p>
+          <p class="qa-answer">Full game.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">I haven't seen much news of Wii U updates. Is the console just naturally easier to deal with, considering it's more powerful than a 3DS?</p>
+          <p class="qa-answer">Basically, yeah. We just put the whole game into RAM and called it a day.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">During her fight, does Undyne chase after Frisk the same speed if they're running or do they outpace her?</p>
+          <p class="qa-answer">Speed is capped in certain rooms, so pressing the run button in certain rooms won't work.</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">I'm happy that I'll be able to finish playing Undertale on the pacifist route on the 3DS.</p>
+          <p class="qa-answer">I'm happy for you too!</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">In Undertale, the console version has different things or events. Like on the Nintendo Switch, Toby added Mad Mew Mew. On the PlayStation you can see Dog Gambling. For Xbox, idk. Do you think that you'll add some of these events? And make them randomly just like Gaster? Sorry for asking this question and I know you guys are doing a lot of work, I hope you the best. No need to add these events.</p>
+          <p class="qa-answer">Fun events are implemented, and yes, all console content is in the port (even 10th anniversary!)</p>
+        </div>
+
+        <div class="qa-item">
+          <p class="qa-question">Will the song that might play when you fight Sans be in the game?</p>
+          <p class="qa-answer">It is a fun value!</p>
+        </div>
+
+        <p style="text-align: center; margin-top: 20px;">Thank you everyone who asked a question!</p>
+      </div>
+
+      <div class="newsletter-nav">
+        <a href="../august2nd/august2nd.html" class="newsletter-arrow">&larr; Previous</a>
+        <span class="newsletter-arrow disabled">Next &rarr;</span>
+      </div>
+
+      <div class="back-link">
+        <a href="../../index.html">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      <a href="https://www.youtube.com/@theprojectsunshine/" target="_blank">YouTube</a> &nbsp;|&nbsp;
+      <a href="https://discord.gg/undertale3ds" target="_blank">Discord</a>
+    </p>
+    <br>
+    <p>Not affiliated with Toby Fox, Materia Collective, or MasterSwordRemix. All trademarks belong to their respective owners.</p>
+  </footer>
+
+</body>
+</html>

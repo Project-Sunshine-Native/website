@@ -109,10 +109,51 @@
       font-style: italic;
     }
 
+    .newsletter-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 60px;
+    }
+
+    .newsletter-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border: 2px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-arrow:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    .newsletter-arrow.disabled {
+      border-color: var(--accent-gray);
+      color: var(--accent-gray);
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .newsletter-arrow.disabled:hover {
+      background: transparent;
+      color: var(--accent-gray);
+      box-shadow: none;
+    }
+
     .back-link {
       display: block;
       text-align: center;
-      margin-top: 60px;
+      margin-top: 40px;
     }
 
     .back-link a {
@@ -281,6 +322,11 @@
       <div class="nl-body" style="text-align: center;">
         <p>Thanks for reading the first newsletter on the website!</p>
         <p>See everyone next week!</p>
+      </div>
+
+      <div class="newsletter-nav">
+        <span class="newsletter-arrow disabled">&larr; Previous</span>
+        <a href="../august7th/august7th.html" class="newsletter-arrow">Next &rarr;</a>
       </div>
 
       <div class="back-link">
