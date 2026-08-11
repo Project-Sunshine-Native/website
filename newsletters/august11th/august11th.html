@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>August Newsletter | Project Sunshine</title>
+  <link rel="icon" type="image/png" href="../../assets/logo/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    body {
+      font-family: 'Determination', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .newsletter-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 20px 80px;
+    }
+
+    .newsletter-banner {
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin: 0 auto 20px;
+      image-rendering: pixelated;
+    }
+
+    .newsletter-subtitle {
+      text-align: center;
+      color: var(--accent-gray);
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    .nl-greet {
+      font-size: clamp(24px, 4vw, 40px);
+      text-align: center;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .nl-section {
+      color: var(--accent-yellow);
+      font-size: clamp(20px, 3.2vw, 28px);
+      letter-spacing: 3px;
+      margin: 60px 0 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .nl-body {
+      color: var(--accent-gray);
+      font-size: 16px;
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    .nl-body p {
+      margin-bottom: 16px;
+    }
+
+    .newsletter-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 60px;
+    }
+
+    .newsletter-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border: 2px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-arrow:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    .newsletter-arrow.disabled {
+      border-color: var(--accent-gray);
+      color: var(--accent-gray);
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .newsletter-arrow.disabled:hover {
+      background: transparent;
+      color: var(--accent-gray);
+      box-shadow: none;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .back-link a {
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 2px solid var(--accent-yellow);
+      padding: 12px 28px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .back-link a:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    @media (max-width: 768px) {
+      .nl-body {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .newsletter-wrap {
+        padding: 40px 15px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../../index.html">Home</a>
+    <a href="#newsletter">Newsletter</a>
+  </nav>
+
+  <main class="newsletter-wrap" id="newsletter">
+    <img src="assets/newsletter.png" alt="August Newsletter" class="newsletter-banner">
+    <p class="newsletter-subtitle">August Newsletter</p>
+
+    <div class="newsletter-content">
+
+      <h2 class="nl-greet">Hi guys!</h2>
+
+      <div class="nl-body">
+        <p>Relatively a short newsletter (and early one too), but this will be the last newsletter at-least until the release of DELTARUNE Chapter 1 3DS and UNDERTALE 3DS.</p>
+      </div>
+
+      <h2 class="nl-section">UNDERTALE Yellow 3DS</h2>
+
+      <div class="nl-body">
+        <p>So, I decided to start actually working on this again, but..</p>
+        <p>Its completely broken! Its so broken that I cant exactly say I’m confident that a release will be any time soon. The game is near unplayable because of lots (and I mean LOTS) of issues with tiles, random GUI stretching (text boxes and inventory menu), softlocks, shader issues, random broken behavior with bullets, audio issues, and more! I don’t know why any of this happens, it seems that all unimplemented functions wouldn’t exactly cause the issues, so that means that a lot of functions are broken or not actually on par with GameMaker behavior. That needs to be fixed before I can generally do any work towards getting the port running well.</p>
+      </div>
+
+      <h2 class="nl-section">DELTARUNE 3DS</h2>
+
+      <div class="nl-body">
+        <p>I can say that as far as bottom screen and touch screen is concerned, I have finished it. It works well, looks good, and integrates well. Thank you @ for helping with the UI! Aside from actual on 3DS testing and 3D implementation, Chapter 1 is finished. Chapter 2 should be a matter of porting over changes from Chapter 1 and testing. As for Chapters 3-4.. These ones will need more work than the first 2. Chapters 3 and 4 start getting a lot heavier with surfaces, shaders, particles, etc. While I do think that they will run at a consistent 30fps on O3DS models, it will take longer to reach that goal. I’m hoping to not have to cut out some visual effects to reach that goal, but only time will tell. Chapter 5 on the other hand, will almost certainly need some visual effects cut out. Particles will absolutely destroy the O3DS’s CPU, and Chapter 5 uses a lot of them, so those must be reduced. Shaders, too, will likely cause a performance loss. I really want to keep shaders and I will try to keep the majority of them, but to get the game running good, it must be done along with some other visual effects. Chapter 5 also uses LOTS of surfaces, which I don’t think will be an issue because I’ll trying to use both VRAM and RAM for chapters 4-5 so we can have enough ram for surfaces, but it DOES use a lot which means ram will fill up quickly.</p>
+      </div>
+
+      <h2 class="nl-section">Undertale 3DS</h2>
+
+      <div class="nl-body">
+        <p>As said, it is around 98% finished (2% unfinished being for the bugs that we may find) but aside from that, it is generally finished. If GitHub fixes the issue with our repository this week, playtesters will have a bit more than a week to test, and we will have a little less than a week to fix bugs, meaning release will be in the last month of August. The reason for all the delays are because we want this to be as good as can be so that it really stands out from other homebrew aswell as so it works well and runs well. We really are trying to make the port as good as can be, and we appreciate all of you who understand. All playtesters were assigned a route earlier last week so its generally smooth from here. While we wait for GitHub to fix the issue, one of our main developers is improving the runner. I am very excited to get this out, and I appriciate everyone who has been paitent with us despite the delays.</p>
+      </div>
+
+      <h2 class="nl-section">Cinnamon Launcher 3DS and Wii U</h2>
+
+      <div class="nl-body">
+        <p>This will be done soon. I cant guarantee that on release it will run EVERY GameMaker game, but it will run more than it wont. Functions are still being implemented, and as more are added, more bugs are getting fixed and more games are getting in game or playable.</p>
+      </div>
+
+      <h2 class="nl-section">Whats next?</h2>
+
+      <div class="nl-body">
+        <p>Whats next after all our ports are done? Well, that’s TBA. We may do more game ports with bottom screen content, or porting cinnamon to more consoles, and so on. This is if me and our dev team decide to however, we cant guarantee this will actually happen.</p>
+      </div>
+
+      <h2 class="nl-section">Thank you, alot.</h2>
+
+      <div class="nl-body">
+        <p>I want to send out my genuine personal thanks to everyone here.</p>
+        <p>I am so glad that this project is what it is today. I genuinely cannot believe that Project Sunshine is one of the BIGGEST 3DS homebrew projects. This project reached places I never thought it would. Just to give you a perspective on how big this project is:</p>
+        <ul>
+          <li>Our project has been recognized at real life conventions</li>
+          <li>Our project has been recogonized by many large UTDR creators</li>
+          <li>We have a following of over ten thousand people on all platforms combined</li>
+        </ul>
+        <p>This project was a simple passion project that I wanted to make alongside all our other developers, and it got to sizes I never thought it would. Thank you. Thank you for supporting us. Thank you for watching and playing our dream.</p>
+        <p>I plan to show off Sunshine publicly at a few conventions next year. Thank you, everyone.</p>
+        <p><strong>Casriel</strong></p>
+      </div>
+
+      <div class="newsletter-nav">
+        <a href="../august2nd/august2nd.html" class="newsletter-arrow">&larr; Previous</a>
+        <span class="newsletter-arrow disabled">Next &rarr;</span>
+      </div>
+
+      <div class="back-link">
+        <a href="../../index.html">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      <a href="https://www.youtube.com/@theprojectsunshine/" target="_blank">YouTube</a> &nbsp;|&nbsp;
+      <a href="https://discord.gg/undertale3ds" target="_blank">Discord</a>
+    </p>
+    <br>
+    <p>Not affiliated with Toby Fox, Materia Collective, or MasterSwordRemix. All trademarks belong to their respective owners.</p>
+  </footer>
+
+</body>
+</html>
