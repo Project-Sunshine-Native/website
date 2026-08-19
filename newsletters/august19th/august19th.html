@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>August Newsletter | Project Sunshine</title>
+  <link rel="icon" type="image/png" href="../../assets/logo/favicon.png">
+ 
+
+<link rel="stylesheet" href="../../css/style.css">
+  <style>
+    body {
+      font-family: 'Determination', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .newsletter-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 20px 80px;
+    }
+
+    .newsletter-banner {
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin: 0 auto 20px;
+      image-rendering: pixelated;
+    }
+
+    .newsletter-subtitle {
+      text-align: center;
+      color: var(--accent-gray);
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    .nl-greet {
+      font-size: clamp(24px, 4vw, 40px);
+      text-align: center;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .nl-section {
+      color: var(--accent-yellow);
+      font-size: clamp(20px, 3.2vw, 28px);
+      letter-spacing: 3px;
+      margin: 60px 0 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .nl-body {
+      color: var(--accent-gray);
+      font-size: 16px;
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    .nl-body p {
+      margin-bottom: 16px;
+    }
+
+    .newsletter-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 60px;
+    }
+
+    .newsletter-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border: 2px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-arrow:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    .newsletter-arrow.disabled {
+      border-color: var(--accent-gray);
+      color: var(--accent-gray);
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .newsletter-arrow.disabled:hover {
+      background: transparent;
+      color: var(--accent-gray);
+      box-shadow: none;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .back-link a {
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 2px solid var(--accent-yellow);
+      padding: 12px 28px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .back-link a:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    @media (max-width: 768px) {
+      .nl-body {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .newsletter-wrap {
+        padding: 40px 15px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../../index.html">Home</a>
+    <a href="#newsletter">Newsletter</a>
+  </nav>
+
+  <main class="newsletter-wrap" id="newsletter">
+    <img src="assets/newsletter.png" alt="August Newsletter" class="newsletter-banner">
+    <p class="newsletter-subtitle">August 19th Newsletter</p>
+
+    <div class="newsletter-content">
+
+      <h2 class="nl-greet">Howdy!</h2>
+
+      <div class="nl-body">
+        <p>So, I said there wouldn't be any news for a bit, but uh.. I think I like making these and I'm in science class with NOTHING better to do so..</p>
+      </div>
+
+<div class="nl-media">
+<img src="assets/berdlynoelle.png">
+
+      <h2 class="nl-section">UNDERTALE 3DS</h2>
+
+      <div class="nl-body">
+        <p>I do know the wait is very long and painful, but..</p>
+        <p>We've been working hard on it, and playtesters should be testing soon. We are a bit behind schedule and to say the least, announcing a release date was an absolute horrible idea that I will never ever in my entire life do again because of how (reasonably) mad people get when we have to (reasonably) delay it. Again as we mentioned if we aren't able to get everything fixed in terms of bugs, we may have to release during the first week of September but keep in mind I don’t think that will happen. </p>
+      </div>
+
+      <h2 class="nl-section">DELTARUNE 3DS</h2>
+
+      <div class="nl-body">
+        <p>So we had a big brain moment and realized that we can transpile the whole game (or the heavier scripts) from GML to C for basically maximum performance which means aside from likely some certain scripts, optimization (other than some shaders and particles?) wont be the biggest issue which means Chapters 1-5 could be coming earlier than I thought it would. </p>
+      </div>
+
+   
+      <h2 class="nl-section">Cinnamon Launcher 3DS and Wii U</h2>
+
+      <div class="nl-body">
+        <p>Hmm, Cinnamon Launcher. Few things to note..</p>
+        <p>So, I feel like everyone should know that UNDERTALE, DELTARUNE, and UNDERTALE Yellow will not run as good as it will using the specific ports unless I decide to port over the game specific changes. Cinnamon Launcher will generally be primarily for other games such as Antonball Classic and Pizza Tower.</p>
+<p>However..</p>
+<p>Pizza Tower uses FMOD and the 3DS doesn’t support it, so unless I were to replace the audio system, it would not play audio. Pizza Tower is also quite the heavy game so if anything, that would have its own specific port so we can have those game specific changes and bottom screen. No promises.</p>
+<p>Games compiled in YYC, GMRT, and games that are older than bytecode/WAD version 9 will not work.</p>
+</div>
+
+   
+      <h2 class="nl-section">Thank ya!</h2>
+
+      <div class="nl-body">
+        <p>Thank you for reading! See you.. When it releases!</p>
+
+        <p><strong>Casriel</strong></p>
+      </div>
+
+      <div class="newsletter-nav">
+        <a href="../august11th/august11th.html" class="newsletter-arrow">&larr; Previous</a>
+        <span class="newsletter-arrow disabled">Next &rarr;</span>
+      </div>
+
+      <div class="back-link">
+        <a href="../../index.html">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      <a href="https://www.youtube.com/@theprojectsunshine/" target="_blank">YouTube</a> &nbsp;|&nbsp;
+      <a href="https://discord.gg/undertale3ds" target="_blank">Discord</a>
+    </p>
+    <br>
+    <p>Not affiliated with Toby Fox, Materia Collective, or MasterSwordRemix. All trademarks belong to their respective owners.</p>
+  </footer>
+
+</body>
+</html>
