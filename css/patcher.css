@@ -103,6 +103,14 @@ body {
 
 .radio-row.disabled { opacity: 0.35; }
 
+label.radio-row { cursor: pointer; }
+
+.platform-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .radio-outer {
   width: 14px;
   height: 14px;
@@ -249,6 +257,23 @@ input[type="file"] { display: none; }
 
 .complete-title { color: var(--accent-yellow); font-size: 17px; letter-spacing: 1px; margin-bottom: 6px; }
 .complete-sub   { color: var(--text-dim); font-size: 13px; line-height: 1.6; }
+
+.log-area {
+  display: none;
+  max-height: 180px;
+  overflow: auto;
+  border: 1px solid #333;
+  background: #070707;
+  color: var(--text-dim);
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 11px;
+  line-height: 1.45;
+  padding: 10px;
+  margin-top: 8px;
+  white-space: pre-wrap;
+}
+
+.log-area.visible { display: block; }
 
 .statusbar {
   border-top: 1px solid #333;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app version="1">
+  <name>UNDERTALE</name>
+  <coder>Toby Fox / Grayforz2468</coder>
+  <version>0.9-beta</version>
+  <release_date>20260903000000</release_date>
+  <short_description>UNDERTALE port for Wii</short_description>
+  <long_description>
+	Wii homebrew port of UNDERTALE using the Butterscotch GameMaker runner fork Cinnamon.
+  </long_description>
+  <ahb_access/>
+</app>

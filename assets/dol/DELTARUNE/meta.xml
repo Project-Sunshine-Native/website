@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app version="1">
+  <name>DELTARUNE: Chapter 1</name>
+  <coder>Toby Fox / Grayforz2468</coder>
+  <version>0.9-beta</version>
+  <release_date>20260903000000</release_date>
+  <short_description>Deltarune chapter 1 port for Wii</short_description>
+  <long_description>
+	Wii homebrew port of DELTARUNE Chapter 1 using the Butterscotch GameMaker runner fork Cinnamon.
+  </long_description>
+  <ahb_access/>
+</app>
