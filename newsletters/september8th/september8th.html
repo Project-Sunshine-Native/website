@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>September Newsletter | Project Sunshine</title>
+
+  <link rel="icon" type="image/png" href="../../assets/logo/favicon.png">
+
+  <link rel="stylesheet" href="../../css/style.css">
+
+  <style>
+
+    body {
+
+      font-family: 'Determination', monospace;
+
+      background-color: var(--bg);
+
+      color: var(--text);
+
+    }
+
+
+
+    .newsletter-wrap {
+
+      max-width: 860px;
+
+      margin: 0 auto;
+
+      padding: 60px 20px 80px;
+
+    }
+
+
+
+    .newsletter-banner {
+
+      display: block;
+
+      width: 100%;
+
+      max-width: 600px;
+
+      height: auto;
+
+      margin: 0 auto 20px;
+
+      image-rendering: pixelated;
+
+    }
+
+
+
+    .newsletter-subtitle {
+
+      text-align: center;
+
+      color: var(--accent-gray);
+
+      font-size: 15px;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 50px;
+
+    }
+
+
+
+    .nl-greet {
+
+      font-size: clamp(24px, 4vw, 40px);
+
+      text-align: center;
+
+      letter-spacing: 3px;
+
+      margin-bottom: 20px;
+
+    }
+
+
+
+    .nl-section {
+
+      color: var(--accent-yellow);
+
+      font-size: clamp(20px, 3.2vw, 28px);
+
+      letter-spacing: 3px;
+
+      margin: 60px 0 20px;
+
+      text-align: center;
+
+      text-transform: uppercase;
+
+    }
+
+
+
+    .nl-body {
+
+      color: var(--accent-gray);
+
+      font-size: 16px;
+
+      line-height: 2;
+
+      letter-spacing: 1.2px;
+
+    }
+
+
+
+    .nl-body p {
+
+      margin-bottom: 16px;
+
+    }
+
+
+
+    .nl-media {
+
+      text-align: center;
+
+      margin: 30px 0;
+
+    }
+
+
+
+    .nl-media img {
+
+      max-width: 400px;
+
+      width: 100%;
+
+      height: auto;
+
+      display: block;
+
+      margin: 0 auto;
+
+    }
+
+
+
+    .nl-media p {
+
+      color: var(--accent-gray);
+
+      font-size: 14px;
+
+      margin-top: 10px;
+
+    }
+
+
+
+    .newsletter-nav {
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      gap: 16px;
+
+      margin-top: 60px;
+
+    }
+
+
+
+    .newsletter-arrow {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 12px 20px;
+
+      border: 2px solid var(--accent-yellow);
+
+      color: var(--accent-yellow);
+
+      text-decoration: none;
+
+      font-size: 18px;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+
+      transition: all 0.3s ease;
+
+    }
+
+
+
+    .newsletter-arrow:hover {
+
+      background: var(--accent-yellow);
+
+      color: var(--bg);
+
+      box-shadow: 0 0 15px var(--accent-yellow);
+
+    }
+
+
+
+    .newsletter-arrow.disabled {
+
+      border-color: var(--accent-gray);
+
+      color: var(--accent-gray);
+
+      cursor: not-allowed;
+
+      opacity: 0.4;
+
+    }
+
+
+
+    .newsletter-arrow.disabled:hover {
+
+      background: transparent;
+
+      color: var(--accent-gray);
+
+      box-shadow: none;
+
+    }
+
+
+
+    .back-link {
+
+      display: block;
+
+      text-align: center;
+
+      margin-top: 40px;
+
+    }
+
+
+
+    .back-link a {
+
+      color: var(--accent-yellow);
+
+      text-decoration: none;
+
+      font-size: 18px;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      border: 2px solid var(--accent-yellow);
+
+      padding: 12px 28px;
+
+      display: inline-block;
+
+      transition: all 0.3s ease;
+
+    }
+
+
+
+    .back-link a:hover {
+
+      background: var(--accent-yellow);
+
+      color: var(--bg);
+
+      box-shadow: 0 0 15px var(--accent-yellow);
+
+    }
+
+
+
+    .nl-body a {
+
+      color: var(--accent-yellow);
+
+      text-decoration: underline;
+
+    }
+
+
+
+    @media (max-width: 768px) {
+
+      .nl-body {
+
+        font-size: 14px;
+
+        line-height: 1.8;
+
+      }
+
+      .newsletter-wrap {
+
+        padding: 40px 15px 60px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <nav>
+
+    <a href="../../index.html">Home</a>
+
+    <a href="#newsletter">Newsletter</a>
+
+  </nav>
+
+
+
+  <main class="newsletter-wrap" id="newsletter">
+
+    <img src="newsletter.png" alt="September Newsletter" class="newsletter-banner">
+
+    <p class="newsletter-subtitle">September Newsletter</p>
+
+
+
+    <div class="newsletter-content">
+
+
+
+      <h2 class="nl-greet">Howdy!</h2>
+
+
+
+            <div class="nl-media">
+
+       <img src="alphys.png" alt="what the fuck is that"
+
+
+        <
+
+      <div class="nl-body">
+
+        <p>Undertale and Deltarune Wii released. Did you see that? </p>
+
+        <p>...alright, fine. I'll address the elephant in the room.</p>
+
+        <p>Before that, thank you to @Matteo1304 for providing the amazing art in this newsletter!</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">Why and how was UTDR Wii released before UTDR 3DS?</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>This has been a question asked a lot, and the reason that Undertale and Deltarune Wii released before Undertale and Deltarune 3DS is because there isn't anything fancy, it's just the game running on a Wii. With 3DS, you have dual screen, touch controls, console content, multiple translations, and more added features. The Wii is also PowerPC, and since the Wii U is also PowerPC, we can just use the Wii U port with the 3DS optimizations. This is how we got it done so quick.</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">Undertale Wii v1.00</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>Soon, we will release the v1.00 version. This should fix bugs and if I have time to make a patch, it will include motion controls for the menus and soul. If this happens and if someone beats Sans with motion controls I will do</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">Deltarune Chapter 2 Wii</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>We are fixing bugs with Chapter 2. It currently runs very good but there are some issues with the camera that makes the game almost unplayable. A release should be soon!</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">Undertale 3DS Beta</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>This is still coming soon! I have finished the game's patch and currently testers are testing for major bugs. This patch will have about everything aside from No Text Delay, Quick Game Over, and the multiple translations. Those will be in v1.00. Hopefully this can release in about a week.</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">Wii U</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>Wii U is being worked on! We fixed the memory leak and hopefully v1.4 will come soon. I want to add the 3DS content to Wii U, so if I decide to do that it may be in v1.5.</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">Cinnamon Source Code</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>The updated Cinnamon Source Code for 3DS and Wii will be pushed soon. As said before, we have had issues with GitHub and their support team being absolutely atrocious, so we have moved repositories. The latest version of the Cinnamon source code will now be available at <a href="https://github.com/Grayforz2468/cinnamon-latest" target="_blank">https://github.com/Grayforz2468/cinnamon-latest</a>. The main repository at <a href="https://github.com/Project-Sunshine-Native/cinnamon" target="_blank">https://github.com/Project-Sunshine-Native/cinnamon</a> will still occasionally be updated with major source code updates and releases.</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">Undertale and Deltarune.. GameCube?</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>Yes, we will soon be porting Undertale and Deltarune Chapter 1 to the GameCube! This currently has no release date but as of now, these are planned. Chapters 2+ will not be released due to RAM limitations.</p>
+
+
+
+      <h2 class="nl-section">Undertale Yellow</h2>
+
+
+
+
+<div class="nl-body">
+
+<p>I’ve made significant progress on getting the game working! A lot of issues that caused gui stretching, garbled tiles, broken audio, broken flags, and more have been fixed! There is still a lot to be implemented and fixed (such as issues with shaders in the Zenith Martlet fight, bullets not spawning in the zenith fight, physics system not implemented which causes a softlock in Snowdin, and timeline functions being unimplemented and broken which breaks the El Baliador fight. Other than that, it works well. Next, I plan to get TS! Underswap running on Butterscotch (NOT the Ai slop 3ds version) which means that the game will eventually also work on Cinnamon, since Cinnamon is a fork of the original Butterscotch runner, and all the fixes I make to Butterscotch gets put into Cinnamon.</p>
+
+
+
+        <p>Thank you for reading, and see ya next time!</p>
+
+      </div>
+
+
+
+      <div class="newsletter-nav">
+
+        <a href="../august19th/august19th.html" class="newsletter-arrow">&larr; Previous</a>
+
+        <span class="newsletter-arrow disabled">Next &rarr;</span>
+
+      </div>
+
+
+
+      <div class="back-link">
+
+        <a href="../../index.html">Back to Home</a>
+
+      </div>
+
+
+
+    </div>
+
+  </main>
+
+
+
+  <footer>
+
+    <p>
+
+      <a href="https://www.youtube.com/@theprojectsunshine/" target="_blank">YouTube</a> &nbsp;|&nbsp;
+
+      <a href="https://discord.gg/undertale3ds" target="_blank">Discord</a>
+
+    </p>
+
+    <br>
+
+    <p>Not affiliated with Toby Fox, Materia Collective, or MasterSwordRemix. All trademarks belong to their respective owners.</p>
+
+  </footer>
+
+
+
+</body>
+
+</html>
+
