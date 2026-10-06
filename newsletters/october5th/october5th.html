@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>October Newsletter | Project Sunshine</title>
+
+  <link rel="icon" type="image/png" href="../../assets/logo/favicon.png">
+
+  <link rel="stylesheet" href="../../css/style.css">
+
+  <style>
+
+    body {
+
+      font-family: 'Determination', monospace;
+
+      background-color: var(--bg);
+
+      color: var(--text);
+
+    }
+
+
+
+    .newsletter-wrap {
+
+      max-width: 860px;
+
+      margin: 0 auto;
+
+      padding: 60px 20px 80px;
+
+    }
+
+
+
+    .newsletter-banner {
+
+      display: block;
+
+      width: 100%;
+
+      max-width: 600px;
+
+      height: auto;
+
+      margin: 0 auto 20px;
+
+      image-rendering: pixelated;
+
+    }
+
+
+
+    .newsletter-subtitle {
+
+      text-align: center;
+
+      color: var(--accent-gray);
+
+      font-size: 15px;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 50px;
+
+    }
+
+
+
+    .nl-greet {
+
+      font-size: clamp(24px, 4vw, 40px);
+
+      text-align: center;
+
+      letter-spacing: 3px;
+
+      margin-bottom: 20px;
+
+    }
+
+
+
+    .nl-section {
+
+      color: var(--accent-yellow);
+
+      font-size: clamp(20px, 3.2vw, 28px);
+
+      letter-spacing: 3px;
+
+      margin: 60px 0 20px;
+
+      text-align: center;
+
+      text-transform: uppercase;
+
+    }
+
+
+
+    .nl-body {
+
+      color: var(--accent-gray);
+
+      font-size: 16px;
+
+      line-height: 2;
+
+      letter-spacing: 1.2px;
+
+    }
+
+
+
+    .nl-body p {
+
+      margin-bottom: 16px;
+
+    }
+
+
+
+    .nl-media {
+
+      text-align: center;
+
+      margin: 30px 0;
+
+    }
+
+
+
+    .nl-media img,
+
+    .nl-media video {
+
+      max-width: 400px;
+
+      width: 100%;
+
+      height: auto;
+
+      display: block;
+
+      margin: 0 auto;
+
+    }
+
+
+
+    .nl-media p {
+
+      color: var(--accent-gray);
+
+      font-size: 14px;
+
+      margin-top: 10px;
+
+    }
+
+
+
+    .newsletter-nav {
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      gap: 16px;
+
+      margin-top: 60px;
+
+    }
+
+
+
+    .newsletter-arrow {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 12px 20px;
+
+      border: 2px solid var(--accent-yellow);
+
+      color: var(--accent-yellow);
+
+      text-decoration: none;
+
+      font-size: 18px;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+
+      transition: all 0.3s ease;
+
+    }
+
+
+
+    .newsletter-arrow:hover {
+
+      background: var(--accent-yellow);
+
+      color: var(--bg);
+
+      box-shadow: 0 0 15px var(--accent-yellow);
+
+    }
+
+
+
+    .newsletter-arrow.disabled {
+
+      border-color: var(--accent-gray);
+
+      color: var(--accent-gray);
+
+      cursor: not-allowed;
+
+      opacity: 0.4;
+
+    }
+
+
+
+    .newsletter-arrow.disabled:hover {
+
+      background: transparent;
+
+      color: var(--accent-gray);
+
+      box-shadow: none;
+
+    }
+
+
+
+    .back-link {
+
+      display: block;
+
+      text-align: center;
+
+      margin-top: 40px;
+
+    }
+
+
+
+    .back-link a {
+
+      color: var(--accent-yellow);
+
+      text-decoration: none;
+
+      font-size: 18px;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      border: 2px solid var(--accent-yellow);
+
+      padding: 12px 28px;
+
+      display: inline-block;
+
+      transition: all 0.3s ease;
+
+    }
+
+
+
+    .back-link a:hover {
+
+      background: var(--accent-yellow);
+
+      color: var(--bg);
+
+      box-shadow: 0 0 15px var(--accent-yellow);
+
+    }
+
+
+
+    .nl-body a {
+
+      color: var(--accent-yellow);
+
+      text-decoration: underline;
+
+    }
+
+
+
+    @media (max-width: 768px) {
+
+      .nl-body {
+
+        font-size: 14px;
+
+        line-height: 1.8;
+
+      }
+
+      .newsletter-wrap {
+
+        padding: 40px 15px 60px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <nav>
+
+    <a href="../../index.html">Home</a>
+
+    <a href="#newsletter">Newsletter</a>
+
+  </nav>
+
+
+
+  <main class="newsletter-wrap" id="newsletter">
+
+    <img src="assets/newsletter.png" alt="October Newsletter" class="newsletter-banner">
+
+    <p class="newsletter-subtitle">October Newsletter</p>
+
+
+
+    <div class="newsletter-content">
+
+
+
+      <h2 class="nl-greet">Howdy!</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>Been a bit without a newsletter, and I have some updates. First, I want to address something.</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">What's happening with all these new ports and release dates?!</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>As you may know, public development has been messy lately, and I would like to explain why.</p>
+
+        <p>For one: There is a grand total of two people working on this project—me (Casriel) and Gray. Gray has undoubtedly been a huge help in the development of Cinnamon, and I thank them so much for contributing toward this project despite getting paid nothing for their hard work. The truth really is: UNDERTALE 3DS is not ready yet.</p>
+
+        <p>During the development of Cinnamon, many problems have arisen as a result of how things were handled back in the early days of this project. For example, the main Cinnamon repository forked Butterscotch in a way where it is very hard for us to work with it and update it. We emailed GitHub about this issue asking if they could change how the repository was forked. For about a month, we waited for a response, just to get nothing back until recently. They still have not fixed the issue. This has caused us to move repositories because GitHub's support is so utterly bad to the point where we could not be bothered to wait anymore and made a new repository.</p>
+
+        <p>For two: We want to make this one of the best pieces of homebrew there is.</p>
+
+        <p>We have been working hard to make this better for you. This means making it a lot more user-friendly and better for Old 3DS systems. We are trying to make Cinnamon better so it makes both my life easier when I start work on DELTARUNE 3DS and for other people who want to use Cinnamon to play their favorite games on 3DS. Having to hold back a release isn't something we want to do, but we promise you: you will be happier waiting instead of getting it now.</p>
+
+        <p>For three: Cinnamon recently had a full renderer rewrite.</p>
+
+        <p>Performance was very bad using the renderer we originally used (Citro2D), and if we wanted a good shot at things working correctly and well, a renderer switch was needed. We recently switched to Citro3D, which allows us to use features Citro2D didn't have to boost performance in games like DELTARUNE and UNDERTALE. This, again, is to better your experience.</p>
+
+        <p>For four: We have lives too.</p>
+
+        <p>We have jobs, and we have things more important to do. We cannot dedicate all our time to Cinnamon.</p>
+
+        <p>For five: We do not use AI in our code.</p>
+
+        <p>You may see a lot of ports (such as The Minish Cap, A Link to the Past, Mario Kart 64, or Mario Kart Wii) coming out very fast. This is because they have AI generate code for them. However, we do not do that. We code by hand, which obviously takes a lot longer than having an AI spit out garbage code that makes our ports randomly break like crazy or turn green. The 3DS, Wii, and Wii U backends have always been AI-free, and we intend to keep them that way.</p>
+
+        <p>For six: I am not good with release dates.</p>
+
+        <p>To be completely and utterly honest with you, every release date announced has been when I "thought it would release," not an ACTUAL timeline. This has caused major confusion because no release dates have been met. I want to make this clear: release dates are all my doing. I have been the one announcing release dates without prior confirmation from other developers. I apologize for the mass confusion with fake release dates. This is something that will not happen again, and release dates will only be announced when the team and I are ABSOLUTELY sure we can meet them. Otherwise, there is no ETA. This is the first big project I've ever managed, and it's been hard getting used to. I have learned a lot about owning a project, and old mistakes I made a while ago will not be made again.</p>
+
+        <p>Lastly, I want to explain why the Wii ports came out before 3DS.</p>
+
+        <p>Project Sunshine has evolved into more than just a 3DS port of UTDR—it's now a port of UTDR and other games to MULTIPLE consoles. Wii was released first because it had been a thought in our mind for a long time, and because the 3DS backend was already heavily optimized and we also had a Wii U base, a Wii port could be made very fast. So, that's what we did. Wii also doesn't have all the fancy bottom screen, borders, and console content that 3DS has, which made it a lot easier to release.</p>
+
+        <p>Looking back, I do agree that 3DS should've released before Wii did. We will not do something like this again.</p>
+
+        <p>Thank you to everyone who has been patient with us. I hope this gives you better insight into what actually happens behind the scenes and why delays like these occur.</p>
+
+      </div>
+
+
+
+      <h2 class="nl-section">General News</h2>
+
+
+
+      <div class="nl-body">
+
+        <p>Time to share some updates!<br>...Wow! I only have three things to share!</p>
+
+      </div>
+
+
+
+      <div class="nl-media">
+
+        <video controls>
+
+          <source src="assets/pt3ds.mp4" type="video/mp4">
+
+          Your browser does not support the video tag.
+
+        </video>
+
+        <p>Heres a little showcase of Pizza Tower running on 3DS. Doesn't run great but it runs!</p>
+
+      </div>
+
+
+
+      <div class="nl-media">
+
+        <img src="assets/ch5wii.png" alt="DELTARUNE Chapter 5 on Wii">
+
+        <p>We got DELTARUNE Chapter 5 running on the Wii! Still a bit.. err.. broken in some places but hey it boots!</p>
+
+      </div>
+
+
+
+      <div class="nl-body">
+
+        <p>Oh, yeah. I got UNDERTALE Yellow perfect in Butterscotch (not the 3ds ai one)! It can now be ported to 3DS without many gameplay issues! I'll work on it soon!</p>
+
+        <p>Also thanks for 13,000 members. dog approved</p>
+
+      </div>
+
+
+
+      <div class="newsletter-nav">
+
+        <a href="../september8th/september8th.html" class="newsletter-arrow">&larr; Previous</a>
+
+        <span class="newsletter-arrow disabled">Next &rarr;</span>
+
+      </div>
+
+
+
+      <div class="back-link">
+
+        <a href="../../index.html">Back to Home</a>
+
+      </div>
+
+
+
+    </div>
+
+  </main>
+
+
+
+  <footer>
+
+    <p>
+
+      <a href="https://www.youtube.com/@theprojectsunshine/" target="_blank">YouTube</a> &nbsp;|&nbsp;
+
+      <a href="https://discord.gg/undertale3ds" target="_blank">Discord</a>
+
+    </p>
+
+    <br>
+
+    <p>Not affiliated with Toby Fox, Materia Collective, or MasterSwordRemix. All trademarks belong to their respective owners.</p>
+
+  </footer>
+
+
+
+</body>
+
+</html>
