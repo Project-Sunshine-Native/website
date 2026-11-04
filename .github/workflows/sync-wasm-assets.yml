@@ -1,0 +1,120 @@
+name: Sync preprocessor WASM assets
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [cinnamon-wasm-built]
+  schedule:
+    - cron: "17 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/sync-wasm-assets.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-preprocessor-wasm-assets
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPOSITORY: Project-Sunshine-Native/cinnamon-preprocessor
+  SOURCE_WORKFLOW: build-wasm.yml
+  SOURCE_BRANCH: main
+  ARTIFACT_NAME: website-wasm-assets
+
+jobs:
+  sync:
+    name: Download latest website WASM artifact
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v7
+
+      - name: Check artifact access token
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.CINNAMON_ARTIFACT_TOKEN }}
+        run: |
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "::error::Add the CINNAMON_ARTIFACT_TOKEN repository secret. It needs Actions: read access to $SOURCE_REPOSITORY."
+            exit 1
+          fi
+
+      - name: Find latest successful upstream build
+        id: upstream
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.CINNAMON_ARTIFACT_TOKEN }}
+        run: |
+          api_path="repos/$SOURCE_REPOSITORY/actions/workflows/$SOURCE_WORKFLOW/runs?branch=$SOURCE_BRANCH&event=push&status=success&per_page=1"
+          run_id="$(gh api "$api_path" --jq '.workflow_runs[0].id // empty')"
+          source_sha="$(gh api "$api_path" --jq '.workflow_runs[0].head_sha // empty')"
+
+          if [[ -z "$run_id" || -z "$source_sha" ]]; then
+            echo "::error::No successful $SOURCE_WORKFLOW run was found on $SOURCE_BRANCH."
+            exit 1
+          fi
+
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "source_sha=$source_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Download website WASM artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.CINNAMON_ARTIFACT_TOKEN }}
+        run: |
+          artifact_dir="$RUNNER_TEMP/$ARTIFACT_NAME"
+          mkdir -p "$artifact_dir"
+          gh run download "${{ steps.upstream.outputs.run_id }}" \
+            --repo "$SOURCE_REPOSITORY" \
+            --name "$ARTIFACT_NAME" \
+            --dir "$artifact_dir"
+
+      - name: Validate and stage shared Wii and 3DS assets
+        shell: bash
+        run: |
+          artifact_dir="$RUNNER_TEMP/$ARTIFACT_NAME"
+          required_files=(
+            cinnamon-preprocessor.mjs
+            cinnamon-preprocessor.wasm
+            game_profiles.cfg
+            resources/wii/icon.png
+            resources/wii/meta.xml
+          )
+
+          for path in "${required_files[@]}"; do
+            if [[ ! -s "$artifact_dir/$path" ]]; then
+              echo "::error::The upstream artifact is missing $path."
+              exit 1
+            fi
+          done
+
+          for path in "${required_files[@]}"; do
+            install -Dm644 "$artifact_dir/$path" "assets/wasm/$path"
+          done
+
+      - name: Commit updated assets
+        shell: bash
+        run: |
+          generated_files=(
+            assets/wasm/cinnamon-preprocessor.mjs
+            assets/wasm/cinnamon-preprocessor.wasm
+            assets/wasm/game_profiles.cfg
+            assets/wasm/resources/wii/icon.png
+            assets/wasm/resources/wii/meta.xml
+          )
+          git add -- "${generated_files[@]}"
+
+          if git diff --cached --quiet; then
+            echo "WASM assets already match the latest upstream build."
+            exit 0
+          fi
+
+          source_sha="${{ steps.upstream.outputs.source_sha }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(wasm): sync cinnamon-preprocessor ${source_sha:0:12}"
+          git push
