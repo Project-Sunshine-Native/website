@@ -564,8 +564,8 @@ async function addRunnerPackageFiles(files, target, patchTarget, originalEntries
   if (target === '3ds') {
     addOrReplaceZipFile(
       merged,
-      '3ds/cinnamon/cinnamon.3dsx',
-      await fetchAssetBytes('assets/runners/3ds/cinnamon.3dsx')
+      '3ds/cinnamon/cinnamon.cia',
+      await fetchAssetBytes('assets/runners/3ds/cinnamon.cia')
     );
     return merged;
   }
