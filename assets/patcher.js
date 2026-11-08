@@ -642,7 +642,7 @@ function startPatch() {
   var installPath = zipRootForTarget(target, patchTarget);
   var msg = 'This will run the ' + patchName + ' ' + getTargetDisplayName(target) + ' asset preprocessor in your browser.\n\nThe generated zip will contain ' + installPath + ' and should be extracted at the SD card root.\n\nReady to preprocess?';
   if (patchTarget === 'deltarune') {
-    msg = 'This will run the Deltarune Chapter 1 ' + getTargetDisplayName(target) + ' asset preprocessor in your browser.\n\nThe generated zip will contain ' + installPath + ' and should be extracted at the SD card root.\n\nReady to preprocess?';
+    msg = 'This will run the Deltarune' + getTargetDisplayName(target) + ' asset preprocessor in your browser.\n\nThe generated zip will contain ' + installPath + ' and should be extracted at the SD card root.\n\nReady to preprocess?';
   }
   if (willSwapDeltaruneRootDataWin) {
     msg = 'This will swap the Deltarune Steam root data.win, then run the Chapter 1 ' + getTargetDisplayName(target) + ' asset preprocessor in your browser.\n\nThe generated zip will contain ' + installPath + ' and should be extracted at the SD card root.\n\nReady to preprocess?';
