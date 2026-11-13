@@ -457,7 +457,7 @@ function downloadBlob(blob, fileName) {
 
 function safeOutputFolderName(name) {
   var clean = (name || 'game').replace(/[^A-Za-z0-9_.-]+/g, '_').replace(/^_+|_+$/g, '');
-  return clean || 'game';
+  return clean && !/^\.+$/.test(clean) ? clean : 'game';
 }
 
 function zipRootForTarget(target, patchTarget) {

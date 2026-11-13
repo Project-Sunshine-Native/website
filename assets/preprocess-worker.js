@@ -45,7 +45,7 @@ function parentDir(path) {
 
 function safeOutputFolderName(name) {
   var clean = (name || 'game').replace(/[^A-Za-z0-9_.-]+/g, '_').replace(/^_+|_+$/g, '');
-  return clean || 'game';
+  return clean && !/^\.+$/.test(clean) ? clean : 'game';
 }
 
 function getPreprocessorInputPath(path) {
@@ -146,9 +146,12 @@ self.onmessage = async function(event) {
     ensureDir(FS, '/out');
 
     var target = event.data.target === 'wii' ? 'wii' : '3ds';
+    var zipRoot = target === '3ds'
+      ? '3ds/cinnamon/' + safeOutputFolderName(event.data.gameFolderName)
+      : '';
     var outputDir = target === 'wii'
       ? '/out/' + (event.data.wiiGameInstallPath || 'apps/cinnamon').replace(/^[/]+/, '')
-      : '/out/3ds/cinnamon/' + safeOutputFolderName(event.data.gameFolderName);
+      : '/out';
 
     if (event.data.limitDeltaruneToChapterOne) {
       await applyDeltaruneChapterOneProfileConfig(FS);
@@ -164,7 +167,7 @@ self.onmessage = async function(event) {
 
     postProgress(88, 'Collecting generated files...');
     var files = [];
-    collectFiles(FS, '/out', '', files);
+    collectFiles(FS, '/out', zipRoot, files);
     if (!files.length) throw new Error('No output files were generated.');
 
     var transfers = files.map(function(file) { return file.bytes.buffer; });
