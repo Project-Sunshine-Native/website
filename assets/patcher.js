@@ -177,10 +177,6 @@ function shouldIncludeGameFolderFile(path) {
   return !/\.(dll|exe)$/.test(name);
 }
 
-function isRootDataWinPath(path) {
-  return normalizeUploadPath(path).toLowerCase() === 'data.win';
-}
-
 function getRootGameMakerDataPath(entries) {
   var dataWinPath = '';
   var gameUnxPath = '';
@@ -193,17 +189,6 @@ function getRootGameMakerDataPath(entries) {
   if (dataWinPath) return dataWinPath;
   if (gameUnxPath) return gameUnxPath;
   return '';
-}
-
-function isDeltaruneSteamFullFolder() {
-  var hasRootDataWin = false;
-  var hasChapterDataWin = false;
-  gameFolderFiles.forEach(function(entry) {
-    var path = normalizeUploadPath(entry.path).toLowerCase();
-    if (path === 'data.win') hasRootDataWin = true;
-    if (/^chapter\d+_windows\/data\.win$/.test(path)) hasChapterDataWin = true;
-  });
-  return hasRootDataWin && hasChapterDataWin;
 }
 
 function updateTargetUi() {
@@ -638,15 +623,8 @@ function startPatch() {
   var target = getSelectedTarget();
   var patchTarget = getSelectedPatchTarget();
   var patchName = getPatchDisplayName(patchTarget);
-  var willSwapDeltaruneRootDataWin = patchTarget === 'deltarune' && isDeltaruneSteamFullFolder();
   var installPath = zipRootForTarget(target, patchTarget);
   var msg = 'This will run the ' + patchName + ' ' + getTargetDisplayName(target) + ' asset preprocessor in your browser.\n\nThe generated zip will contain ' + installPath + ' and should be extracted at the SD card root.\n\nReady to preprocess?';
-  if (patchTarget === 'deltarune') {
-    msg = 'This will run the Deltarune' + getTargetDisplayName(target) + ' asset preprocessor in your browser.\n\nThe generated zip will contain ' + installPath + ' and should be extracted at the SD card root.\n\nReady to preprocess?';
-  }
-  if (willSwapDeltaruneRootDataWin) {
-    msg = 'This will swap the Deltarune Steam root data.win, then run the Chapter 1 ' + getTargetDisplayName(target) + ' asset preprocessor in your browser.\n\nThe generated zip will contain ' + installPath + ' and should be extracted at the SD card root.\n\nReady to preprocess?';
-  }
   showDialog('Confirm Preprocess', msg, [
     { label: 'No',  cls: '',    action: closeDialog },
     { label: 'Yes', cls: 'yes', action: function() { closeDialog(); runPreprocess(); } }
@@ -665,7 +643,6 @@ function runPreprocess() {
   Promise.resolve().then(function() {
     var target = getSelectedTarget();
     var patchTarget = getSelectedPatchTarget();
-    var swapDeltaruneRootDataWin = patchTarget === 'deltarune' && isDeltaruneSteamFullFolder();
     var limitDeltaruneToChapterOne = patchTarget === 'deltarune';
     setProgress(2);
     return {
@@ -673,7 +650,6 @@ function runPreprocess() {
       patchTarget: patchTarget,
       wiiAppFolderName: getWiiDolPackageFolder(patchTarget),
       wiiGameInstallPath: getWiiGameInstallPath(patchTarget),
-      swapDeltaruneRootDataWin: swapDeltaruneRootDataWin,
       limitDeltaruneToChapterOne: limitDeltaruneToChapterOne,
       inputDataPath: patchTarget === 'general' ? getRootGameMakerDataPath(gameFolderFiles) : '',
       filesForPreprocess: gameFolderFiles
@@ -728,7 +704,6 @@ function runPreprocess() {
       wiiAppFolderName: runConfig.wiiAppFolderName,
       wiiGameInstallPath: runConfig.wiiGameInstallPath,
       target: target,
-      swapDeltaruneRootDataWin: runConfig.swapDeltaruneRootDataWin,
       limitDeltaruneToChapterOne: runConfig.limitDeltaruneToChapterOne,
       inputDataPath: runConfig.inputDataPath
     });

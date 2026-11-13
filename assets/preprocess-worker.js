@@ -1,7 +1,6 @@
 import createPreprocessor from './wasm/cinnamon-preprocessor.mjs';
 
 const wasmBaseUrl = new URL('./wasm/', import.meta.url);
-const deltaruneRootDataWinPatchUrl = new URL('./dataWinPatch/data.win', import.meta.url);
 const deltaruneChapterOneConfigUrl = new URL('./wasm/deltarune-ch1-game-profiles.cfg', import.meta.url);
 
 async function loadPreprocessorResources(FS) {
@@ -49,10 +48,6 @@ function safeOutputFolderName(name) {
   return clean || 'game';
 }
 
-function isRootDataWinPath(path) {
-  return (path || '').replace(/\\/g, '/').replace(/^\/+/, '').toLowerCase() === 'data.win';
-}
-
 function getPreprocessorInputPath(path) {
   var normalized = (path || '').replace(/\\/g, '/').replace(/^\/+/, '');
   if (!normalized) return '/work/game';
@@ -84,30 +79,6 @@ async function writeGameFolder(FS, entries) {
       postProgress(pct, 'Copying game folder into memory... ' + (i + 1) + '/' + entries.length);
     }
   }
-}
-
-async function swapDeltaruneRootDataWin(entries) {
-  var rootIndex = -1;
-  for (var i = 0; i < entries.length; i++) {
-    if (isRootDataWinPath(entries[i].path)) {
-      rootIndex = i;
-      break;
-    }
-  }
-  if (rootIndex < 0) throw new Error('Deltarune root data.win swap needs root data.win.');
-
-  postProgress(5, 'Swapping Deltarune root data.win...');
-  postLog('Swapping Deltarune Steam root data.win with bundled chapter select data.win...');
-  var response = await fetch(deltaruneRootDataWinPatchUrl);
-  if (!response.ok) throw new Error('Could not load Deltarune root data.win replacement.');
-  var patchedBytes = new Uint8Array(await response.arrayBuffer());
-  var patchedEntries = entries.slice();
-  patchedEntries[rootIndex] = {
-    path: entries[rootIndex].path,
-    bytes: patchedBytes
-  };
-  postLog('Deltarune root data.win swapped.');
-  return patchedEntries;
 }
 
 async function applyDeltaruneChapterOneProfileConfig(FS) {
@@ -184,11 +155,7 @@ self.onmessage = async function(event) {
     }
 
     postProgress(8, 'Copying game folder into memory...');
-    var inputFiles = event.data.files || [];
-    if (event.data.swapDeltaruneRootDataWin) {
-      inputFiles = await swapDeltaruneRootDataWin(inputFiles);
-    }
-    await writeGameFolder(FS, inputFiles);
+    await writeGameFolder(FS, event.data.files || []);
 
     postProgress(45, 'Running ' + target.toUpperCase() + ' asset preprocessor...');
     var inputPath = getPreprocessorInputPath(event.data.inputDataPath);
