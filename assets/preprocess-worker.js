@@ -1,7 +1,6 @@
 import createPreprocessor from './wasm/cinnamon-preprocessor.mjs';
 
 const wasmBaseUrl = new URL('./wasm/', import.meta.url);
-const deltaruneChapterOneConfigUrl = new URL('./wasm/deltarune-ch1-game-profiles.cfg', import.meta.url);
 
 async function loadPreprocessorResources(FS) {
   const resources = ['game_profiles.cfg', 'resources/wii/icon.png', 'resources/wii/meta.xml'];
@@ -81,18 +80,6 @@ async function writeGameFolder(FS, entries) {
   }
 }
 
-async function applyDeltaruneChapterOneProfileConfig(FS) {
-  postProgress(6, 'Loading Deltarune Chapter 1 profile config...');
-  var response = await fetch(deltaruneChapterOneConfigUrl);
-  if (!response.ok) throw new Error('Could not load Deltarune Chapter 1 profile config.');
-  var bytes = new Uint8Array(await response.arrayBuffer());
-  try {
-    if (FS.analyzePath('/game_profiles.cfg').exists) FS.unlink('/game_profiles.cfg');
-  } catch (err) {}
-  FS.writeFile('/game_profiles.cfg', bytes);
-  postLog('Using Deltarune Chapter 1-only preprocessor config.');
-}
-
 function removeRecursive(FS, path) {
   var info = FS.analyzePath(path);
   if (!info.exists) return;
@@ -152,10 +139,6 @@ self.onmessage = async function(event) {
     var outputDir = target === 'wii'
       ? '/out/' + (event.data.wiiGameInstallPath || 'apps/cinnamon').replace(/^[/]+/, '')
       : '/out';
-
-    if (event.data.limitDeltaruneToChapterOne) {
-      await applyDeltaruneChapterOneProfileConfig(FS);
-    }
 
     postProgress(8, 'Copying game folder into memory...');
     await writeGameFolder(FS, event.data.files || []);

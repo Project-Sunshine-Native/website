@@ -643,14 +643,12 @@ function runPreprocess() {
   Promise.resolve().then(function() {
     var target = getSelectedTarget();
     var patchTarget = getSelectedPatchTarget();
-    var limitDeltaruneToChapterOne = patchTarget === 'deltarune';
     setProgress(2);
     return {
       target: target,
       patchTarget: patchTarget,
       wiiAppFolderName: getWiiDolPackageFolder(patchTarget),
       wiiGameInstallPath: getWiiGameInstallPath(patchTarget),
-      limitDeltaruneToChapterOne: limitDeltaruneToChapterOne,
       inputDataPath: patchTarget === 'general' ? getRootGameMakerDataPath(gameFolderFiles) : '',
       filesForPreprocess: gameFolderFiles
     };
@@ -704,7 +702,6 @@ function runPreprocess() {
       wiiAppFolderName: runConfig.wiiAppFolderName,
       wiiGameInstallPath: runConfig.wiiGameInstallPath,
       target: target,
-      limitDeltaruneToChapterOne: runConfig.limitDeltaruneToChapterOne,
       inputDataPath: runConfig.inputDataPath
     });
   }).catch(function(err) {
