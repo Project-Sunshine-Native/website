@@ -1,11 +1,24 @@
-import createPreprocessor from './wasm/cinnamon-preprocessor.mjs';
+import { FileCache, mountFileSystem, openTemporaryFile, discardTemporaryFile, cleanOldTemporaryFiles } from './preprocess-storage.js?v=20261114-memory-stream-2';
+import { writeZip } from './preprocess-zip.js?v=20261114-memory-stream-2';
 
 const wasmBaseUrl = new URL('./wasm/', import.meta.url);
+const assetVersion = new URL(import.meta.url).searchParams.get('v') || '20261114-memory-stream-2';
+
+function wasmAssetUrl(path) {
+  const url = new URL(path, wasmBaseUrl);
+  url.searchParams.set('v', assetVersion);
+  return url;
+}
+
+async function createPreprocessor(options) {
+  const factory = await import(wasmAssetUrl('cinnamon-preprocessor.mjs').href);
+  return factory.default(options);
+}
 
 async function loadPreprocessorResources(FS) {
   const resources = ['game_profiles.cfg', 'resources/wii/icon.png', 'resources/wii/meta.xml'];
   await Promise.all(resources.map(async function(path) {
-    const response = await fetch(new URL(path, wasmBaseUrl));
+    const response = await fetch(wasmAssetUrl(path));
     if (!response.ok) throw new Error('Could not load preprocessor resource: ' + path);
     const destination = '/' + path;
     ensureDir(FS, parentDir(destination));
@@ -14,14 +27,24 @@ async function loadPreprocessorResources(FS) {
 }
 
 var lastLogLine = '';
+var pendingLogs = [];
+var context = null;
+
+function flushLogs() {
+  if (!pendingLogs.length) return;
+  self.postMessage({ type: 'logs', lines: pendingLogs });
+  pendingLogs = [];
+}
 
 function postProgress(pct, status) {
+  flushLogs();
   self.postMessage({ type: 'progress', pct: pct, status: status });
 }
 
 function postLog(line) {
   lastLogLine = String(line);
-  self.postMessage({ type: 'log', line: line });
+  pendingLogs.push(lastLogLine);
+  if (pendingLogs.length >= 64) flushLogs();
 }
 
 function ensureDir(FS, path) {
@@ -57,44 +80,6 @@ function getPreprocessorInputPath(path) {
   return '/work/game/' + normalized;
 }
 
-async function readEntryBytes(entry) {
-  if (entry.bytes) return entry.bytes;
-  if (entry.file && entry.file.arrayBuffer) return new Uint8Array(await entry.file.arrayBuffer());
-  throw new Error('Could not read ' + (entry.path || 'selected file') + '.');
-}
-
-async function writeGameFolder(FS, entries) {
-  ensureDir(FS, '/work/game');
-  for (var i = 0; i < entries.length; i++) {
-    var entry = entries[i];
-    var path = (entry.path || '').replace(/\\/g, '/').replace(/^\/+/, '');
-    if (!path) continue;
-    var dir = parentDir(path);
-    if (dir) ensureDir(FS, '/work/game/' + dir);
-    var bytes = await readEntryBytes(entry);
-    FS.writeFile('/work/game/' + path, bytes);
-    if ((i % 8) === 0 || i + 1 === entries.length) {
-      var pct = 8 + Math.round(((i + 1) / entries.length) * 32);
-      postProgress(pct, 'Copying game folder into memory... ' + (i + 1) + '/' + entries.length);
-    }
-  }
-}
-
-function removeRecursive(FS, path) {
-  var info = FS.analyzePath(path);
-  if (!info.exists) return;
-  var stat = FS.stat(path);
-  if (FS.isDir(stat.mode)) {
-    FS.readdir(path).forEach(function(name) {
-      if (name === '.' || name === '..') return;
-      removeRecursive(FS, path + '/' + name);
-    });
-    FS.rmdir(path);
-  } else {
-    FS.unlink(path);
-  }
-}
-
 function collectFiles(FS, root, relativeRoot, out) {
   FS.readdir(root).forEach(function(name) {
     if (name === '.' || name === '..') return;
@@ -104,63 +89,153 @@ function collectFiles(FS, root, relativeRoot, out) {
     if (FS.isDir(stat.mode)) {
       collectFiles(FS, path, relativePath, out);
     } else {
-      var bytes = FS.readFile(path, { encoding: 'binary' });
-      out.push({ name: relativePath, bytes: bytes });
+      out.push({ name: relativePath, generatedPath: path, size: stat.size });
     }
   });
 }
 
-self.onmessage = async function(event) {
-  if (event.data.type !== 'run') return;
+async function runConversion(data) {
+  if (context) throw new Error('A conversion is already running.');
+  const started = performance.now();
+  postProgress(3, 'Loading WASM preprocessor...');
+  const module = await createPreprocessor({
+    thisProgram: 'cinnamon-preprocessor',
+    locateFile: path => wasmAssetUrl(path).href,
+    preprocessProgress: postProgress,
+    print: postLog,
+    printErr: postLog
+  });
+  const FS = module.FS;
+  const cache = new FileCache();
+  context = { module, FS, cache, temporary: null, zipTemporary: null };
+  await loadPreprocessorResources(FS);
+  ensureDir(FS, '/work');
+  ensureDir(FS, '/out');
+  postProgress(8, 'Opening selected game files...');
+  mountFileSystem(FS, '/work/game', { entries: data.files || [], cache });
+
   try {
-    postProgress(3, 'Loading WASM preprocessor...');
-    var module = await createPreprocessor({
-      thisProgram: 'cinnamon-preprocessor',
-      locateFile: function(path) { return new URL(path, wasmBaseUrl).href; },
-      preprocessProgress: postProgress,
-      print: postLog,
-      printErr: postLog,
-      setStatus: function(status) {
-        if (status) postLog(status);
+    context.temporary = await openTemporaryFile('scratch');
+  } catch (error) {
+    const inputBytes = (data.files || []).reduce((sum, entry) => sum + (entry.file ? entry.file.size : entry.bytes.byteLength), 0);
+    if (inputBytes > 128 * 1024 * 1024) {
+      throw new Error('Temporary browser storage is unavailable for this game. Enable site storage or try a regular browser window.');
+    }
+    postLog('Temporary browser storage is unavailable; using memory for generated files.');
+  }
+  if (context.temporary) {
+    const output = mountFileSystem(FS, '/out', { cache, temporary: context.temporary });
+    context.output = output;
+    module.preprocessCopyFile = (source, destination) => output.cloneFile(source, destination);
+    module.preprocessFilesEqual = (a, b) => output.sameFile(a, b);
+    postLog('Using disk-backed temporary output; original game files are referenced without copying.');
+  }
+
+  const target = data.target === 'wii' ? 'wii' : '3ds';
+  const zipRoot = target === '3ds' ? '3ds/cinnamon/' + safeOutputFolderName(data.gameFolderName) : '';
+  const outputDir = target === 'wii'
+    ? '/out/' + (data.wiiGameInstallPath || 'apps/cinnamon').replace(/^[/]+/, '') : '/out';
+  postProgress(45, 'Running ' + target.toUpperCase() + ' asset preprocessor...');
+  const rc = module.callMain([getPreprocessorInputPath(data.inputDataPath), '--output', outputDir, '--target', target]);
+  if (rc !== 0) throw new Error('cinnamon-preprocessor exited with code ' + rc);
+  const files = [];
+  collectFiles(FS, '/out', zipRoot, files);
+  if (!files.length) throw new Error('No output files were generated.');
+  postLog('Conversion completed in ' + ((performance.now() - started) / 1000).toFixed(1) + ' seconds.');
+  postLog('WASM heap: ' + (module.HEAPU8.length / 1048576).toFixed(1) + ' MiB; input cache: ' + (cache.peakBytes / 1048576).toFixed(1) + ' MiB.');
+  if (context.output) postLog('Temporary output: ' + (context.output.allocatedBytes / 1048576).toFixed(1) + ' MiB on disk.');
+  postProgress(88, 'Preparing download...');
+  self.postMessage({ type: 'processed', files });
+}
+
+async function packageConversion(files) {
+  if (!context) throw new Error('No conversion output is available.');
+  const { FS, cache } = context;
+  const generatedFiles = [];
+  collectFiles(FS, '/out', '', generatedFiles);
+  const generated = new Set(generatedFiles.map(file => file.generatedPath));
+  const started = performance.now();
+  postProgress(90, 'Creating ZIP...');
+  let writer;
+  try {
+    context.zipTemporary = await openTemporaryFile('zip');
+    let position = 0;
+    writer = { write(bytes) {
+      let done = 0;
+      while (done < bytes.length) {
+        const count = context.zipTemporary.handle.write(bytes.subarray(done), { at: position + done });
+        if (!count) throw new Error('Temporary browser storage could not accept the ZIP. Check available disk space and site storage permissions.');
+        done += count;
       }
-    });
+      position += done;
+    }};
+  } catch (error) {
+    await discardTemporaryFile(context.zipTemporary);
+    context.zipTemporary = null;
+    const total = files.reduce((sum, file) => sum + (file.generatedPath ? file.size : file.file ? file.file.size : file.bytes.byteLength), 0);
+    if (total > 128 * 1024 * 1024) {
+      throw new Error('Could not open temporary browser storage for this ZIP. Check available disk space and site storage permissions.');
+    }
+    const parts = [];
+    writer = { write: bytes => parts.push(new Blob([bytes])), finish: () => new Blob(parts, { type: 'application/zip' }) };
+    postLog('Creating ZIP in bounded Blob chunks because temporary browser storage is unavailable.');
+  }
 
-    var FS = module.FS;
-    await loadPreprocessorResources(FS);
-    removeRecursive(FS, '/work');
-    removeRecursive(FS, '/out');
-    ensureDir(FS, '/work');
-    ensureDir(FS, '/out');
+  const entries = files.map(file => ({ ...file,
+    size: file.generatedPath ? file.size : file.file ? file.file.size : file.bytes.byteLength }));
+  let lastProgress = 0;
+  const size = writeZip(entries, writer, file => {
+    if (file.generatedPath) {
+      if (!generated.has(file.generatedPath)) throw new Error('Unknown generated file: ' + file.name);
+      const stream = FS.open(file.generatedPath, 'r');
+      return { read: (target, position) => FS.read(stream, target, 0, target.length, position), close() {
+        FS.close(stream);
+        // The ZIP owns the copied contents now. Reclaim scratch blocks as we
+        // proceed so scratch output and the complete ZIP need not coexist.
+        FS.unlink(file.generatedPath);
+      } };
+    }
+    if (file.file) return { read: (target, position) => cache.read(file.file, target, position) };
+    const bytes = file.bytes instanceof Uint8Array ? file.bytes : new Uint8Array(file.bytes);
+    return { read(target, position) { target.set(bytes.subarray(position, position + target.length)); return target.length; } };
+  }, (done, total) => {
+    if (performance.now() - lastProgress < 150 && done !== total) return;
+    lastProgress = performance.now();
+    postProgress(90 + (total ? Math.floor(done / total * 9) : 9), 'Creating ZIP... ' + (done / 1048576).toFixed(0) + ' / ' + (total / 1048576).toFixed(0) + ' MiB');
+  });
 
-    var target = event.data.target === 'wii' ? 'wii' : '3ds';
-    var zipRoot = target === '3ds'
-      ? '3ds/cinnamon/' + safeOutputFolderName(event.data.gameFolderName)
-      : '';
-    var outputDir = target === 'wii'
-      ? '/out/' + (event.data.wiiGameInstallPath || 'apps/cinnamon').replace(/^[/]+/, '')
-      : '/out';
+  let zip;
+  if (context.zipTemporary) {
+    context.zipTemporary.handle.flush();
+    context.zipTemporary.handle.close();
+    context.zipTemporary.handle = null;
+    zip = await context.zipTemporary.file.getFile();
+  } else zip = writer.finish();
+  await discardTemporaryFile(context.temporary);
+  context.temporary = null;
+  postLog('ZIP completed in ' + ((performance.now() - started) / 1000).toFixed(1) + ' seconds (' + (size / 1048576).toFixed(1) + ' MiB).');
+  flushLogs();
+  self.postMessage({ type: 'done', zip });
+  context = null;
+}
 
-    postProgress(8, 'Copying game folder into memory...');
-    await writeGameFolder(FS, event.data.files || []);
-
-    postProgress(45, 'Running ' + target.toUpperCase() + ' asset preprocessor...');
-    var inputPath = getPreprocessorInputPath(event.data.inputDataPath);
-    var rc = module.callMain([inputPath, '--output', outputDir, '--target', target]);
-    if (rc !== 0) throw new Error('cinnamon-preprocessor exited with code ' + rc);
-
-    postProgress(88, 'Collecting generated files...');
-    var files = [];
-    collectFiles(FS, '/out', zipRoot, files);
-    if (!files.length) throw new Error('No output files were generated.');
-
-    var transfers = files.map(function(file) { return file.bytes.buffer; });
-    self.postMessage({ type: 'done', files: files }, transfers);
-  } catch (err) {
-    var message = err && err.message ? err.message : String(err);
+self.onmessage = async function(event) {
+  try {
+    if (event.data.type === 'run') {
+      await cleanOldTemporaryFiles();
+      await runConversion(event.data);
+    } else if (event.data.type === 'package') {
+      await packageConversion(event.data.files);
+    }
+  } catch (error) {
+    if (context) {
+      await discardTemporaryFile(context.temporary);
+      await discardTemporaryFile(context.zipTemporary);
+      context = null;
+    }
+    flushLogs();
+    let message = error && error.message ? error.message : String(error);
     if (lastLogLine) message += '\nLast log: ' + lastLogLine;
-    self.postMessage({
-      type: 'error',
-      message: message
-    });
+    self.postMessage({ type: 'error', message });
   }
 };

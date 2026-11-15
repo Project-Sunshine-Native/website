@@ -9,6 +9,10 @@ var _kD = [0x3a,0xf7,0x5c,0x91,0x2e,0xd4,0x8b,0x60,0x15,0xca,0x4f,0xa2];
 var gameFolderFiles = [];
 var gameFolderName = '';
 var preprocessWorker = null;
+var preprocessAssetVersion = '20261114-memory-stream-2';
+var preprocessLogLines = [];
+var preprocessLogPending = [];
+var preprocessLogTimer = null;
 
 function md5(input) {
   var k = [], i = 0;
@@ -310,138 +314,34 @@ function onError(msg) {
 }
 
 function appendLog(line) {
-  var log = document.getElementById('logArea');
-  log.classList.add('visible');
-  log.textContent += line + '\n';
-  log.scrollTop = log.scrollHeight;
+  preprocessLogPending.push(String(line));
+  if (preprocessLogPending.length > 500) preprocessLogPending.splice(0, preprocessLogPending.length - 500);
+  if (preprocessLogTimer !== null) return;
+  preprocessLogTimer = setTimeout(function() {
+    preprocessLogTimer = null;
+    preprocessLogLines = preprocessLogLines.concat(preprocessLogPending).slice(-500);
+    preprocessLogPending = [];
+    var log = document.getElementById('logArea');
+    log.classList.add('visible');
+    log.textContent = preprocessLogLines.join('\n') + '\n';
+    log.scrollTop = log.scrollHeight;
+  }, 100);
 }
 
 function resetLog() {
+  clearTimeout(preprocessLogTimer);
+  preprocessLogTimer = null;
+  preprocessLogLines = [];
+  preprocessLogPending = [];
   var log = document.getElementById('logArea');
   log.textContent = '';
   log.classList.remove('visible');
 }
 
 function createPreprocessWorker() {
-  return new Worker(new URL('assets/preprocess-worker.js', window.location.href), { type: 'module' });
-}
-
-var zipCrcTable = null;
-
-function getZipCrcTable() {
-  if (zipCrcTable) return zipCrcTable;
-  zipCrcTable = new Uint32Array(256);
-  for (var i = 0; i < 256; i++) {
-    var c = i;
-    for (var k = 0; k < 8; k++) {
-      c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
-    }
-    zipCrcTable[i] = c >>> 0;
-  }
-  return zipCrcTable;
-}
-
-function crc32(bytes) {
-  var table = getZipCrcTable();
-  var c = 0xFFFFFFFF;
-  for (var i = 0; i < bytes.length; i++) {
-    c = table[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
-  }
-  return (c ^ 0xFFFFFFFF) >>> 0;
-}
-
-function dosTimestamp(date) {
-  var year = Math.max(1980, date.getFullYear());
-  var time = (date.getHours() << 11) | (date.getMinutes() << 5) | Math.floor(date.getSeconds() / 2);
-  var day = ((year - 1980) << 9) | ((date.getMonth() + 1) << 5) | date.getDate();
-  return { time: time, day: day };
-}
-
-function write16(out, offset, value) {
-  out[offset] = value & 0xFF;
-  out[offset + 1] = (value >>> 8) & 0xFF;
-}
-
-function write32(out, offset, value) {
-  out[offset] = value & 0xFF;
-  out[offset + 1] = (value >>> 8) & 0xFF;
-  out[offset + 2] = (value >>> 16) & 0xFF;
-  out[offset + 3] = (value >>> 24) & 0xFF;
-}
-
-function makeZip(files) {
-  var encoder = new TextEncoder();
-  var stamp = dosTimestamp(new Date());
-  var entries = files.map(function(file) {
-    var nameBytes = encoder.encode(file.name.replace(/\\/g, '/'));
-    var bytes = file.bytes instanceof Uint8Array ? file.bytes : new Uint8Array(file.bytes);
-    return {
-      nameBytes: nameBytes,
-      bytes: bytes,
-      crc: crc32(bytes),
-      offset: 0
-    };
-  });
-
-  var localSize = 0;
-  var centralSize = 0;
-  entries.forEach(function(entry) {
-    localSize += 30 + entry.nameBytes.length + entry.bytes.length;
-    centralSize += 46 + entry.nameBytes.length;
-  });
-  var totalSize = localSize + centralSize + 22;
-  var out = new Uint8Array(totalSize);
-  var offset = 0;
-
-  entries.forEach(function(entry) {
-    entry.offset = offset;
-    write32(out, offset, 0x04034b50); offset += 4;
-    write16(out, offset, 20); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    write16(out, offset, stamp.time); offset += 2;
-    write16(out, offset, stamp.day); offset += 2;
-    write32(out, offset, entry.crc); offset += 4;
-    write32(out, offset, entry.bytes.length); offset += 4;
-    write32(out, offset, entry.bytes.length); offset += 4;
-    write16(out, offset, entry.nameBytes.length); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    out.set(entry.nameBytes, offset); offset += entry.nameBytes.length;
-    out.set(entry.bytes, offset); offset += entry.bytes.length;
-  });
-
-  var centralOffset = offset;
-  entries.forEach(function(entry) {
-    write32(out, offset, 0x02014b50); offset += 4;
-    write16(out, offset, 20); offset += 2;
-    write16(out, offset, 20); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    write16(out, offset, stamp.time); offset += 2;
-    write16(out, offset, stamp.day); offset += 2;
-    write32(out, offset, entry.crc); offset += 4;
-    write32(out, offset, entry.bytes.length); offset += 4;
-    write32(out, offset, entry.bytes.length); offset += 4;
-    write16(out, offset, entry.nameBytes.length); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    write16(out, offset, 0); offset += 2;
-    write32(out, offset, 0); offset += 4;
-    write32(out, offset, entry.offset); offset += 4;
-    out.set(entry.nameBytes, offset); offset += entry.nameBytes.length;
-  });
-
-  write32(out, offset, 0x06054b50); offset += 4;
-  write16(out, offset, 0); offset += 2;
-  write16(out, offset, 0); offset += 2;
-  write16(out, offset, entries.length); offset += 2;
-  write16(out, offset, entries.length); offset += 2;
-  write32(out, offset, centralSize); offset += 4;
-  write32(out, offset, centralOffset); offset += 4;
-  write16(out, offset, 0);
-
-  return new Blob([out], { type: 'application/zip' });
+  var url = new URL('assets/preprocess-worker.js', window.location.href);
+  url.searchParams.set('v', preprocessAssetVersion);
+  return new Worker(url, { type: 'module' });
 }
 
 function downloadBlob(blob, fileName) {
@@ -590,8 +490,7 @@ async function mergeOriginalFolderFiles(generatedFiles, target, originalEntries,
     var entry = entries[i];
     var zipName = root + '/' + entry.path.replace(/\\/g, '/');
     if (existing[zipName.toLowerCase()]) continue;
-    var buffer = await entry.file.arrayBuffer();
-    merged.push({ name: zipName, bytes: new Uint8Array(buffer) });
+    merged.push({ name: zipName, file: entry.file });
   }
   return merged;
 }
@@ -664,26 +563,30 @@ function runPreprocess() {
         setStatus(data.status);
       } else if (data.type === 'log') {
         appendLog(data.line);
-      } else if (data.type === 'done') {
-        setProgress(95);
-        setStatus('Creating zip...');
+      } else if (data.type === 'logs') {
+        data.lines.forEach(appendLog);
+      } else if (data.type === 'processed') {
+        setProgress(88);
+        setStatus('Preparing download...');
         mergeOriginalFolderFiles(data.files, target, runConfig.filesForPreprocess, runConfig.patchTarget).then(function(files) {
           return addRunnerPackageFiles(files, target, runConfig.patchTarget, runConfig.filesForPreprocess);
         }).then(function(files) {
-          var zip = makeZip(files);
-          var targetName = getTargetDisplayName(target);
-          downloadBlob(zip, zipFileNameForTarget(target));
-          setProgress(100);
-          document.getElementById('progressArea').classList.remove('visible');
-          document.getElementById('completeArea').classList.add('visible');
-          document.getElementById('completeSub').textContent = 'You should see the ' + targetName + ' asset zip in your Downloads folder.';
-          setStatus('Done! ' + targetName + ' asset zip saved to your Downloads folder.');
-          cleanupPreprocessWorker();
-          btn.disabled = false;
+          var transfers = Array.from(new Set(files.filter(function(file) { return file.bytes; }).map(function(file) { return file.bytes.buffer; })));
+          preprocessWorker.postMessage({ type: 'package', files: files }, transfers);
         }).catch(function(err) {
           cleanupPreprocessWorker();
           onError(err && err.message ? err.message : String(err));
         });
+      } else if (data.type === 'done') {
+        cleanupPreprocessWorker();
+        var targetName = getTargetDisplayName(target);
+        downloadBlob(data.zip, zipFileNameForTarget(target));
+        setProgress(100);
+        document.getElementById('progressArea').classList.remove('visible');
+        document.getElementById('completeArea').classList.add('visible');
+        document.getElementById('completeSub').textContent = 'You should see the ' + targetName + ' asset zip in your Downloads folder.';
+        setStatus('Done! ' + targetName + ' asset zip saved to your Downloads folder.');
+        btn.disabled = false;
       } else if (data.type === 'error') {
         cleanupPreprocessWorker();
         onError(data.message);
