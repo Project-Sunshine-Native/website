@@ -1,0 +1,93 @@
+name: Sync 3DS runner CIA
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [cinnamon-3ds-built]
+  schedule:
+    - cron: "37 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/sync-3ds-runner.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-3ds-runner
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPOSITORY: Project-Sunshine-Native/cinnamon-runner
+  SOURCE_WORKFLOW: build-3ds.yml
+  SOURCE_BRANCH: main
+  ARTIFACT_NAME: cinnamon-3ds
+
+jobs:
+  sync:
+    name: Download latest 3DS runner artifact
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v7
+
+      - name: Check artifact access token
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.CINNAMON_ARTIFACT_TOKEN }}
+        run: |
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "::error::Add the CINNAMON_ARTIFACT_TOKEN repository secret. It needs Actions: read access to $SOURCE_REPOSITORY."
+            exit 1
+          fi
+
+      - name: Find latest successful upstream build
+        id: upstream
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.CINNAMON_ARTIFACT_TOKEN }}
+        run: |
+          api_path="repos/$SOURCE_REPOSITORY/actions/workflows/$SOURCE_WORKFLOW/runs?branch=$SOURCE_BRANCH&event=push&status=success&per_page=1"
+          upstream="$(gh api "$api_path" --jq '.workflow_runs[0] // empty')"
+          if [[ -z "$upstream" ]]; then
+            echo "::error::No successful $SOURCE_WORKFLOW push run was found on $SOURCE_BRANCH."
+            exit 1
+          fi
+
+          echo "run_id=$(jq -r '.id' <<< "$upstream")" >> "$GITHUB_OUTPUT"
+          echo "source_sha=$(jq -r '.head_sha' <<< "$upstream")" >> "$GITHUB_OUTPUT"
+
+      - name: Download 3DS runner artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.CINNAMON_ARTIFACT_TOKEN }}
+        run: |
+          artifact_dir="$RUNNER_TEMP/$ARTIFACT_NAME"
+          mkdir -p "$artifact_dir"
+          gh run download "${{ steps.upstream.outputs.run_id }}" \
+            --repo "$SOURCE_REPOSITORY" \
+            --name "$ARTIFACT_NAME" \
+            --dir "$artifact_dir"
+
+          if [[ ! -s "$artifact_dir/cinnamon.cia" ]]; then
+            echo "::error::The upstream artifact is missing cinnamon.cia."
+            exit 1
+          fi
+          install -Dm644 "$artifact_dir/cinnamon.cia" assets/runners/3ds/cinnamon.cia
+
+      - name: Commit updated CIA
+        shell: bash
+        run: |
+          git add -- assets/runners/3ds/cinnamon.cia
+          if git diff --cached --quiet; then
+            echo "3DS runner CIA already matches the latest upstream build."
+            exit 0
+          fi
+
+          source_sha="${{ steps.upstream.outputs.source_sha }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(3ds): sync cinnamon runner ${source_sha:0:12}"
+          git push
