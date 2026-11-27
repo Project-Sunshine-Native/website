@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>November Newsletter | Project Sunshine</title>
+  <link rel="icon" type="image/png" href="../../assets/logo/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    @font-face {
+      font-family: 'Newsletter';
+      src: url('../../assets/fonts/Newsletter.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'Newsletter', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    b, strong, h1, h2, h3, h4, h5, h6 {
+      font-family: 'Determination', monospace;
+    }
+
+    .newsletter-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 20px 80px;
+    }
+
+    .newsletter-banner {
+      display: block;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin: 0 auto 20px;
+      image-rendering: pixelated;
+    }
+
+    .newsletter-subtitle {
+      text-align: center;
+      color: var(--accent-gray);
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    .nl-greet {
+      font-size: clamp(24px, 4vw, 40px);
+      text-align: center;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .nl-section {
+      color: var(--accent-yellow);
+      font-size: clamp(20px, 3.2vw, 28px);
+      letter-spacing: 3px;
+      margin: 60px 0 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .nl-body {
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 2;
+      letter-spacing: 1.2px;
+    }
+
+    .nl-body p {
+      margin-bottom: 16px;
+    }
+
+    .nl-body ul {
+      margin: 16px 0 16px 24px;
+      list-style-type: disc;
+    }
+
+    .nl-body li {
+      margin-bottom: 8px;
+    }
+
+    .nl-media {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .nl-media img,
+    .nl-media video {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .nl-media p {
+      color: #ffffff;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .newsletter-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 60px;
+    }
+
+    .newsletter-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border: 2px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-arrow:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    .newsletter-arrow.disabled {
+      border-color: var(--accent-gray);
+      color: var(--accent-gray);
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .newsletter-arrow.disabled:hover {
+      background: transparent;
+      color: var(--accent-gray);
+      box-shadow: none;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .back-link a {
+      color: var(--accent-yellow);
+      text-decoration: none;
+      font-size: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 2px solid var(--accent-yellow);
+      padding: 12px 28px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .back-link a:hover {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    .nl-body a {
+      color: var(--accent-yellow);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .nl-body {
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .newsletter-wrap {
+        padding: 40px 15px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../../index.html">Home</a>
+    <a href="#newsletter">Newsletter</a>
+  </nav>
+
+  <main class="newsletter-wrap" id="newsletter">
+    <img src="assets/newsletter.png" alt="November Newsletter" class="newsletter-banner">
+    <p class="newsletter-subtitle">November Newsletter</p>
+
+    <div class="newsletter-content">
+
+      <div class="nl-body">
+        <p>I've been counting the minutes on the clock...</p>
+        <p>Two months without a newsletter?!?!</p>
+        <p>Guess I might as well...</p>
+      </div>
+
+      <h2 class="nl-section">Cinnamon Launcher</h2>
+
+      <div class="nl-body">
+        <p>Cinnamon Launcher has been released (if you SOMEHOW didn't know) and we've been working on improving performance for games all around the board.</p>
+        <p>We've been making a lot of general optimizations for the general runner, but we are putting in special optimizations for specific games. Those games being:</p>
+        <ul>
+          <li>DELTARUNE Chapters 1-5</li>
+          <li>DELTARUNE Chapter 1+2 DEMO</li>
+          <li>UNDERTALE</li>
+          <li>SURVEY_PROGRAM</li>
+          <li>UNDERTALE Yellow</li>
+          <li>TS! UNDERSWAP</li>
+          <li>Sonic SMS Remake</li>
+          <li>SONIC.EXE</li>
+          <li>Paper Mario 3D World</li>
+          <li>AM2R (Another Metroid 2 Remake)</li>
+          <li>Pizza Tower Sage 2019</li>
+          <li>Pizza Tower (MAYBE, it won't be locked 60)</li>
+        </ul>
+        <p>And probably some more if I feel like it and if demand for that game is high.</p>
+        <p>We've already put in quite a few for UNDERTALE,DELTARUNE Chapter 1. and DELTARUNE Chapter 2, and to say the least, they run way better on Old 3DS.
+        <p>Next update should fix a softlock in DELTARUNE Chapter 2 with Susies laughter aswell as some optimizations.</p>
+        <p>Anyways, we're still working on improving the launcher, and making it a bit more customizable, such as new themes for later...</p>
+        <p>Hope everyone likes them on release!</p>
+      </div>
+
+      <h2 class="nl-section">UNDERTALE 3DS</h2>
+
+      <div class="nl-body">
+        <p>No, it is NOT infact dead in the water..<br>Work is still being done, i'll show a few sneaks below!</p>
+      </div>
+
+
+      <div class="nl-media">
+        <img src="assets/asriel.jpg" alt="Asriel on 3DS">
+        <p>Here's a litle sneak of the Asriel fight running on both screens!</p>
+      </div>
+
+       <div class="nl-media">
+        <img src="assets/muffet.png" alt="Muffet on 3DS">
+        <p>Muffet fight on both screens!</p>
+      </div>
+
+       <div class="nl-media">
+        <img src="assets/mew.png" alt="Mad Mew Mew on 3DS">
+        <p>Mad Mew Mew fight on both screens!</p>
+      </div>
+
+
+      <div class="nl-body">
+        <p>Playtesters have been playtesting the full game with the patch.. we've been working on fixing those bugs and integrating stuff better with the 3DS dual screens, etc.</p>
+        <p>It shall be out when it's ready! You can play single screen UNDERTALE via Cinnamon Launcher, still!</p>
+      </div>
+
+
+      <h2 class="nl-section">Wii U</h2>
+
+      <div class="nl-body">
+        <p>We gave Wii U a ReviveMint, it's alive again..</p>
+        <p>Shaders now work on Wii U aswell as games like Pizza Tower and DELTARUNE Chapters 1-5.</p>
+
+       <div class="nl-media">
+        <img src="assets/flowery.jpg" alt="Flowery on Wii U">
+        <p>Flowery fight on a real Wii U!</p>
+      </div>
+
+      <div class="nl-media">
+        <img src="assets/cliffs.jpg" alt="Cliffs on Wii U">
+        <p>Cliffs on a real Wii U!</p>
+      </div>
+
+      <div class="nl-media">
+        <img src="assets/platform.jpg" alt="Platforming on Wii U">
+        <p>Platforming on a real Wii U!</p>
+      </div>
+
+        <div class="nl-media">
+          <video controls src="assets/johngutter.mp4"></video>
+         <p>John Gutter in Cemu</p>
+         </div>
+
+
+ <h2 class="nl-section">Wrapping it up</h2>
+<p>Well, thats it for today!</p>
+<p>Expect updates soon, I try to update 3DS twice a week usually, so look out for that!</p>
+
+
+      </div>
+
+      <div class="newsletter-nav">
+        <a href="../september8th/september8th.html" class="newsletter-arrow">&larr; Previous</a>
+        <span class="newsletter-arrow disabled">Next &rarr;</span>
+      </div>
+
+      <div class="back-link">
+        <a href="../../index.html">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      <a href="https://www.youtube.com/@theprojectsunshine/" target="_blank">YouTube</a> &nbsp;|&nbsp;
+      <a href="https://discord.gg/undertale3ds" target="_blank">Discord</a>
+    </p>
+    <br>
+    <p>Not affiliated with Toby Fox, Materia Collective, or MasterSwordRemix. All trademarks belong to their respective owners.</p>
+  </footer>
+
+</body>
+</html>
